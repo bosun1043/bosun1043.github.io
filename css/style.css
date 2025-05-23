@@ -222,4 +222,125 @@ h2 {
     .backtest-controls {
         flex-direction: column;
     }
+}
+
+/* 로딩 인디케이터 */
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#loading-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    z-index: 1000;
+}
+
+/* 기존 스타일에 추가 */
+.strategy-controls {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.strategy-params {
+    margin-top: 10px;
+}
+
+.strategy-params label {
+    display: block;
+    margin: 5px 0;
+}
+
+.strategy-params input {
+    width: 60px;
+    padding: 4px;
+    margin-left: 10px;
+}
+
+.indicator {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.indicator .label {
+    font-weight: 500;
+    width: 100px;
+}
+
+.indicator .value {
+    font-size: 1.2em;
+    margin: 0 10px;
+}
+
+.indicator .change {
+    font-size: 0.9em;
+}
+
+.indicator .change.positive {
+    color: #2ecc71;
+}
+
+.indicator .change.negative {
+    color: #e74c3c;
+}
+
+#error-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+/* 반응형 디자인 개선 */
+@media (max-width: 768px) {
+    .strategy-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .portfolio-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .indicator {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .indicator .value {
+        margin: 5px 0;
+    }
 } 

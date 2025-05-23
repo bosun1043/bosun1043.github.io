@@ -32,20 +32,22 @@
             <div class="dashboard">
                 <div class="market-overview">
                     <h3>시장 개요</h3>
-                    <div id="market-indicators"></div>
-                </div>
-                <div class="quick-stats">
-                    <div class="stat-card">
-                        <h4>KOSPI</h4>
-                        <p id="kospi-value">Loading...</p>
-                    </div>
-                    <div class="stat-card">
-                        <h4>KOSDAQ</h4>
-                        <p id="kosdaq-value">Loading...</p>
-                    </div>
-                    <div class="stat-card">
-                        <h4>USD/KRW</h4>
-                        <p id="exchange-rate">Loading...</p>
+                    <div id="market-indicators">
+                        <div class="indicator">
+                            <span class="label">KOSPI</span>
+                            <span id="kospi-value" class="value">Loading...</span>
+                            <span class="change"></span>
+                        </div>
+                        <div class="indicator">
+                            <span class="label">KOSDAQ</span>
+                            <span id="kosdaq-value" class="value">Loading...</span>
+                            <span class="change"></span>
+                        </div>
+                        <div class="indicator">
+                            <span class="label">USD/KRW</span>
+                            <span id="exchange-rate" class="value">Loading...</span>
+                            <span class="change"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -60,23 +62,57 @@
                     <div class="strategy-chart">
                         <canvas id="momentum-chart"></canvas>
                     </div>
-                    <button class="strategy-btn" onclick="runStrategy('momentum')">전략 실행</button>
+                    <div class="strategy-controls">
+                        <button class="strategy-btn" onclick="runStrategy('momentum')">전략 실행</button>
+                        <div class="strategy-params">
+                            <label>
+                                <span>기간 (개월):</span>
+                                <input type="number" id="momentum-period" value="12" min="1" max="24">
+                            </label>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="strategy-card">
                     <h3>밸류 전략</h3>
                     <p>PER, PBR 기반 밸류 전략</p>
                     <div class="strategy-chart">
                         <canvas id="value-chart"></canvas>
                     </div>
-                    <button class="strategy-btn" onclick="runStrategy('value')">전략 실행</button>
+                    <div class="strategy-controls">
+                        <button class="strategy-btn" onclick="runStrategy('value')">전략 실행</button>
+                        <div class="strategy-params">
+                            <label>
+                                <span>PER 가중치:</span>
+                                <input type="number" id="value-per-weight" value="0.6" min="0" max="1" step="0.1">
+                            </label>
+                            <label>
+                                <span>PBR 가중치:</span>
+                                <input type="number" id="value-pbr-weight" value="0.4" min="0" max="1" step="0.1">
+                            </label>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="strategy-card">
                     <h3>퀄리티 전략</h3>
                     <p>ROE, 영업이익률 기반 퀄리티 전략</p>
                     <div class="strategy-chart">
                         <canvas id="quality-chart"></canvas>
                     </div>
-                    <button class="strategy-btn" onclick="runStrategy('quality')">전략 실행</button>
+                    <div class="strategy-controls">
+                        <button class="strategy-btn" onclick="runStrategy('quality')">전략 실행</button>
+                        <div class="strategy-params">
+                            <label>
+                                <span>ROE 가중치:</span>
+                                <input type="number" id="quality-roe-weight" value="0.5" min="0" max="1" step="0.1">
+                            </label>
+                            <label>
+                                <span>영업이익률 가중치:</span>
+                                <input type="number" id="quality-margin-weight" value="0.5" min="0" max="1" step="0.1">
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -108,6 +144,10 @@
                             <h4>최대 낙폭</h4>
                             <p id="max-drawdown">-</p>
                         </div>
+                        <div class="metric">
+                            <h4>승률</h4>
+                            <p id="win-rate">-</p>
+                        </div>
                     </div>
                     <div class="chart-container">
                         <canvas id="backtest-chart"></canvas>
@@ -134,6 +174,10 @@
                             <h4>연간 수익률</h4>
                             <p id="annual-return">-</p>
                         </div>
+                        <div class="stat">
+                            <h4>포트폴리오 리스크</h4>
+                            <p id="portfolio-risk">-</p>
+                        </div>
                     </div>
                 </div>
                 <div class="portfolio-holdings">
@@ -146,6 +190,7 @@
                                 <th>평균단가</th>
                                 <th>현재가</th>
                                 <th>평가손익</th>
+                                <th>수익률</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -173,6 +218,17 @@
     <footer>
         <p>&copy; 2024 퀀트 트레이딩 시스템. All rights reserved.</p>
     </footer>
+
+    <!-- 로딩 인디케이터 -->
+    <div id="loading-indicator" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- 에러 메시지 -->
+    <div id="error-message" style="display: none;">
+        <p></p>
+    </div>
 
     <script src="js/main.js"></script>
 </body>

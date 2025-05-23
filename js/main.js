@@ -1,20 +1,34 @@
+import { marketAPI, strategyAPI, backtestAPI, portfolioAPI } from './services/api.js';
+import { StrategyRunner } from './services/strategies.js';
+import { ChartComponent } from './components/charts.js';
+
 // 전역 변수
 let charts = {};
 let currentPortfolio = {};
 let marketData = {};
+let strategyRunner = null;
+
+// API 엔드포인트
+const API_BASE_URL = 'http://localhost:8080/api';
 
 // 페이지 로드 시 실행
 document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
     setupTradingViewWidget();
-    loadMarketData();
+    fetchMarketData();
     initializeCharts();
+    updatePortfolio();
+    
+    // 주기적으로 데이터 업데이트
+    setInterval(fetchMarketData, 60000); // 1분마다 시장 데이터 업데이트
+    setInterval(updatePortfolio, 300000); // 5분마다 포트폴리오 업데이트
 });
 
-function initializeApp() {
+async function initializeApp() {
     setupEventListeners();
     setupDateInputs();
-    loadPortfolioData();
+    await loadPortfolioData();
+    strategyRunner = new StrategyRunner(marketData);
 }
 
 function setupEventListeners() {
@@ -53,98 +67,195 @@ function setupTradingViewWidget() {
     });
 }
 
-async function loadMarketData() {
+async function fetchMarketData() {
     try {
-        // 실제 API 연동 시 여기에 API 호출 코드 추가
-        const mockData = {
-            kospi: "2,500.00",
-            kosdaq: "850.00",
-            usdkrw: "1,350.00"
-        };
-
-        document.getElementById('kospi-value').textContent = mockData.kospi;
-        document.getElementById('kosdaq-value').textContent = mockData.kosdaq;
-        document.getElementById('exchange-rate').textContent = mockData.usdkrw;
+        const response = await fetch(`${API_BASE_URL}/market-data`);
+        const data = await response.json();
+        
+        document.getElementById('kospi-value').textContent = data.kospi.toFixed(2);
+        document.getElementById('kosdaq-value').textContent = data.kosdaq.toFixed(2);
+        document.getElementById('exchange-rate').textContent = data.exchange_rate.toFixed(2);
     } catch (error) {
         console.error('시장 데이터 로딩 실패:', error);
+        showError('시장 데이터를 불러오는데 실패했습니다.');
     }
 }
 
 function initializeCharts() {
     // 모멘텀 전략 차트
-    charts.momentum = new Chart(document.getElementById('momentum-chart'), {
-        type: 'line',
+    charts.momentum = new ChartComponent('momentum-chart', {
         data: {
-            labels: ['1월', '2월', '3월', '4월', '5월', '6월'],
             datasets: [{
-                label: '수익률',
-                data: [0, 5, 8, 12, 15, 18],
                 borderColor: '#3498db',
-                tension: 0.1
             }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
         }
     });
 
     // 밸류 전략 차트
-    charts.value = new Chart(document.getElementById('value-chart'), {
-        type: 'line',
+    charts.value = new ChartComponent('value-chart', {
         data: {
-            labels: ['1월', '2월', '3월', '4월', '5월', '6월'],
             datasets: [{
-                label: '수익률',
-                data: [0, 3, 6, 9, 12, 15],
                 borderColor: '#2ecc71',
-                tension: 0.1
             }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
         }
     });
 
     // 퀄리티 전략 차트
-    charts.quality = new Chart(document.getElementById('quality-chart'), {
-        type: 'line',
+    charts.quality = new ChartComponent('quality-chart', {
         data: {
-            labels: ['1월', '2월', '3월', '4월', '5월', '6월'],
             datasets: [{
-                label: '수익률',
-                data: [0, 4, 7, 10, 13, 16],
                 borderColor: '#e74c3c',
-                tension: 0.1
             }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
         }
     });
+
+    // 모든 차트 초기화
+    Object.values(charts).forEach(chart => chart.initialize());
 }
 
-function runStrategy(strategyType) {
-    // 전략 실행 로직
-    console.log(`${strategyType} 전략 실행`);
-    // 실제 구현 시 API 호출 및 데이터 처리 로직 추가
+async function runStrategy(strategyType) {
+    try {
+        showLoading(`${strategyType} 전략을 실행 중입니다...`);
+        
+        const response = await fetch(`${API_BASE_URL}/run-strategy`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ strategy: strategyType })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            updateStrategyChart(strategyType, data.results);
+            showStrategyResults(strategyType, data.results);
+        } else {
+            throw new Error(data.error);
+        }
+    } catch (error) {
+        console.error('전략 실행 실패:', error);
+        showError('전략 실행 중 오류가 발생했습니다.');
+    } finally {
+        hideLoading();
+    }
 }
 
-function runBacktest() {
-    const strategy = document.getElementById('strategy-select').value;
-    const startDate = document.getElementById('start-date').value;
-    const endDate = document.getElementById('end-date').value;
+async function runBacktest() {
+    try {
+        const strategy = document.getElementById('strategy-select').value;
+        const startDate = document.getElementById('start-date').value;
+        const endDate = document.getElementById('end-date').value;
+        
+        showLoading('백테스트를 실행 중입니다...');
+        
+        const response = await fetch(`${API_BASE_URL}/run-backtest`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                strategy: strategy,
+                start_date: startDate,
+                end_date: endDate
+            })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            updateBacktestResults(data.metrics);
+        } else {
+            throw new Error(data.error);
+        }
+    } catch (error) {
+        console.error('백테스트 실행 실패:', error);
+        showError('백테스트 실행 중 오류가 발생했습니다.');
+    } finally {
+        hideLoading();
+    }
+}
 
-    // 백테스트 실행 로직
-    console.log(`백테스트 실행: ${strategy}, ${startDate} ~ ${endDate}`);
-    // 실제 구현 시 API 호출 및 데이터 처리 로직 추가
+async function updatePortfolio() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/portfolio`);
+        const data = await response.json();
+        
+        if (data.success) {
+            updatePortfolioDisplay(data.portfolio);
+        } else {
+            throw new Error(data.error);
+        }
+    } catch (error) {
+        console.error('포트폴리오 업데이트 실패:', error);
+        showError('포트폴리오 정보를 불러오는데 실패했습니다.');
+    }
+}
 
-    // 임시 결과 표시
-    document.getElementById('return-rate').textContent = '+15.3%';
-    document.getElementById('sharpe-ratio').textContent = '1.2';
-    document.getElementById('max-drawdown').textContent = '-8.5%';
+// UI 헬퍼 함수들
+function showLoading(message) {
+    // 로딩 인디케이터 표시
+    const loadingEl = document.createElement('div');
+    loadingEl.id = 'loading-indicator';
+    loadingEl.innerHTML = `
+        <div class="loading-spinner"></div>
+        <p>${message}</p>
+    `;
+    document.body.appendChild(loadingEl);
+}
+
+function hideLoading() {
+    const loadingEl = document.getElementById('loading-indicator');
+    if (loadingEl) {
+        loadingEl.remove();
+    }
+}
+
+function showError(message) {
+    // 에러 메시지 표시
+    const errorEl = document.createElement('div');
+    errorEl.className = 'error-message';
+    errorEl.textContent = message;
+    document.body.appendChild(errorEl);
+    
+    setTimeout(() => {
+        errorEl.remove();
+    }, 3000);
+}
+
+function showStrategyResults(strategyType, results) {
+    const resultContainer = document.createElement('div');
+    resultContainer.className = 'strategy-results';
+    resultContainer.innerHTML = `
+        <h3>${strategyType} 전략 결과</h3>
+        <div class="results-list">
+            ${results.selected_stocks.map(stock => `
+                <div class="stock-item">
+                    <span class="symbol">${stock.symbol}</span>
+                    <span class="score">${stock.score.toFixed(2)}</span>
+                </div>
+            `).join('')}
+        </div>
+    `;
+    
+    document.querySelector(`#${strategyType}-chart`).parentNode.appendChild(resultContainer);
+}
+
+function updateStrategyChart(strategyType, results) {
+    const chart = charts[strategyType];
+    const labels = results.selected_stocks.map(s => s.symbol);
+    const data = results.selected_stocks.map(s => s.score);
+    
+    chart.updateData(labels, data);
+}
+
+function updateBacktestResults(metrics) {
+    document.getElementById('return-rate').textContent = `${metrics.total_return.toFixed(2)}%`;
+    document.getElementById('sharpe-ratio').textContent = metrics.sharpe_ratio.toFixed(2);
+    document.getElementById('max-drawdown').textContent = `${metrics.max_drawdown.toFixed(2)}%`;
+    
+    // 백테스트 차트 업데이트
+    const backtestChart = new ChartComponent('backtest-chart');
+    backtestChart.initialize();
+    backtestChart.updateData(metrics.dates, metrics.equity_curve);
 }
 
 function updateBacktestChart() {
@@ -191,4 +302,37 @@ function handleNavigation(e) {
     const targetId = e.target.getAttribute('href').substring(1);
     const targetSection = document.getElementById(targetId);
     targetSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+function updatePortfolioDisplay(portfolio) {
+    document.getElementById('total-assets').textContent = 
+        formatCurrency(portfolio.total_value);
+    document.getElementById('daily-return').textContent = 
+        `${portfolio.daily_return.toFixed(2)}%`;
+    document.getElementById('annual-return').textContent = 
+        `${portfolio.annual_return.toFixed(2)}%`;
+    
+    // 보유 종목 테이블 업데이트
+    const tbody = document.querySelector('#holdings-table tbody');
+    tbody.innerHTML = '';
+    
+    for (const [symbol, position] of Object.entries(portfolio.positions)) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${symbol}</td>
+            <td>${position.quantity}</td>
+            <td>${formatCurrency(position.average_price)}</td>
+            <td>${formatCurrency(position.current_price)}</td>
+            <td>${formatCurrency(position.profit)}</td>
+        `;
+        tbody.appendChild(row);
+    }
+}
+
+// 유틸리티 함수들
+function formatCurrency(value) {
+    return new Intl.NumberFormat('ko-KR', {
+        style: 'currency',
+        currency: 'KRW'
+    }).format(value);
 } 
