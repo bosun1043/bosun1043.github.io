@@ -15,20 +15,12 @@ const API_BASE_URL = 'http://localhost:8080/api';
 document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
     setupTradingViewWidget();
-    fetchMarketData();
     initializeCharts();
-    updatePortfolio();
-    
-    // 주기적으로 데이터 업데이트
-    setInterval(fetchMarketData, 60000); // 1분마다 시장 데이터 업데이트
-    setInterval(updatePortfolio, 300000); // 5분마다 포트폴리오 업데이트
 });
 
-async function initializeApp() {
+function initializeApp() {
     setupEventListeners();
     setupDateInputs();
-    await loadPortfolioData();
-    strategyRunner = new StrategyRunner(marketData);
 }
 
 function setupEventListeners() {
@@ -67,6 +59,147 @@ function setupTradingViewWidget() {
     });
 }
 
+function initializeCharts() {
+    // 모멘텀 전략 차트
+    charts.momentum = new Chart(document.getElementById('momentum-chart'), {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: '모멘텀 점수',
+                data: [],
+                backgroundColor: '#3498db'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // 밸류 전략 차트
+    charts.value = new Chart(document.getElementById('value-chart'), {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: '밸류 점수',
+                data: [],
+                backgroundColor: '#2ecc71'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // 퀄리티 전략 차트
+    charts.quality = new Chart(document.getElementById('quality-chart'), {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: '퀄리티 점수',
+                data: [],
+                backgroundColor: '#e74c3c'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
+function runStrategy(strategyType) {
+    showLoading(`${strategyType} 전략을 실행 중입니다...`);
+    
+    // 임시 데이터 생성
+    setTimeout(() => {
+        const mockData = generateMockData(strategyType);
+        updateStrategyChart(strategyType, mockData);
+        showStrategyResults(strategyType, mockData);
+        hideLoading();
+    }, 1000);
+}
+
+function generateMockData(strategyType) {
+    const symbols = ['삼성전자', 'SK하이닉스', 'LG에너지솔루션', 'NAVER', '카카오', 
+                    '현대차', '기아', 'POSCO홀딩스', 'KB금융', '신한지주'];
+    
+    return {
+        selected_stocks: symbols.map(symbol => ({
+            symbol: symbol,
+            score: Math.random() * 100
+        })).sort((a, b) => b.score - a.score).slice(0, 5)
+    };
+}
+
+function showStrategyResults(strategyType, results) {
+    // 기존 결과 제거
+    const existingResults = document.querySelector(`#${strategyType}-chart`).parentNode.querySelector('.strategy-results');
+    if (existingResults) {
+        existingResults.remove();
+    }
+
+    const resultContainer = document.createElement('div');
+    resultContainer.className = 'strategy-results';
+    resultContainer.innerHTML = `
+        <h3>${strategyType} 전략 결과</h3>
+        <div class="results-list">
+            ${results.selected_stocks.map(stock => `
+                <div class="stock-item">
+                    <span class="symbol">${stock.symbol}</span>
+                    <span class="score">${stock.score.toFixed(2)}</span>
+                </div>
+            `).join('')}
+        </div>
+    `;
+    
+    document.querySelector(`#${strategyType}-chart`).parentNode.appendChild(resultContainer);
+}
+
+function updateStrategyChart(strategyType, results) {
+    const chart = charts[strategyType];
+    chart.data.labels = results.selected_stocks.map(s => s.symbol);
+    chart.data.datasets[0].data = results.selected_stocks.map(s => s.score);
+    chart.update();
+}
+
+function showLoading(message) {
+    const loadingEl = document.getElementById('loading-indicator');
+    loadingEl.style.display = 'block';
+    loadingEl.querySelector('p').textContent = message;
+}
+
+function hideLoading() {
+    const loadingEl = document.getElementById('loading-indicator');
+    loadingEl.style.display = 'none';
+}
+
+function showError(message) {
+    const errorEl = document.getElementById('error-message');
+    errorEl.style.display = 'block';
+    errorEl.querySelector('p').textContent = message;
+    
+    setTimeout(() => {
+        errorEl.style.display = 'none';
+    }, 3000);
+}
+
+function handleNavigation(e) {
+    e.preventDefault();
+    const targetId = e.target.getAttribute('href').substring(1);
+    const targetSection = document.getElementById(targetId);
+    targetSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+function updateBacktestChart() {
+    // 백테스트 차트 업데이트 로직
+    console.log('백테스트 차트 업데이트');
+}
+
 async function fetchMarketData() {
     try {
         const response = await fetch(`${API_BASE_URL}/market-data`);
@@ -78,65 +211,6 @@ async function fetchMarketData() {
     } catch (error) {
         console.error('시장 데이터 로딩 실패:', error);
         showError('시장 데이터를 불러오는데 실패했습니다.');
-    }
-}
-
-function initializeCharts() {
-    // 모멘텀 전략 차트
-    charts.momentum = new ChartComponent('momentum-chart', {
-        data: {
-            datasets: [{
-                borderColor: '#3498db',
-            }]
-        }
-    });
-
-    // 밸류 전략 차트
-    charts.value = new ChartComponent('value-chart', {
-        data: {
-            datasets: [{
-                borderColor: '#2ecc71',
-            }]
-        }
-    });
-
-    // 퀄리티 전략 차트
-    charts.quality = new ChartComponent('quality-chart', {
-        data: {
-            datasets: [{
-                borderColor: '#e74c3c',
-            }]
-        }
-    });
-
-    // 모든 차트 초기화
-    Object.values(charts).forEach(chart => chart.initialize());
-}
-
-async function runStrategy(strategyType) {
-    try {
-        showLoading(`${strategyType} 전략을 실행 중입니다...`);
-        
-        const response = await fetch(`${API_BASE_URL}/run-strategy`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ strategy: strategyType })
-        });
-        
-        const data = await response.json();
-        if (data.success) {
-            updateStrategyChart(strategyType, data.results);
-            showStrategyResults(strategyType, data.results);
-        } else {
-            throw new Error(data.error);
-        }
-    } catch (error) {
-        console.error('전략 실행 실패:', error);
-        showError('전략 실행 중 오류가 발생했습니다.');
-    } finally {
-        hideLoading();
     }
 }
 
@@ -188,120 +262,6 @@ async function updatePortfolio() {
         console.error('포트폴리오 업데이트 실패:', error);
         showError('포트폴리오 정보를 불러오는데 실패했습니다.');
     }
-}
-
-// UI 헬퍼 함수들
-function showLoading(message) {
-    // 로딩 인디케이터 표시
-    const loadingEl = document.createElement('div');
-    loadingEl.id = 'loading-indicator';
-    loadingEl.innerHTML = `
-        <div class="loading-spinner"></div>
-        <p>${message}</p>
-    `;
-    document.body.appendChild(loadingEl);
-}
-
-function hideLoading() {
-    const loadingEl = document.getElementById('loading-indicator');
-    if (loadingEl) {
-        loadingEl.remove();
-    }
-}
-
-function showError(message) {
-    // 에러 메시지 표시
-    const errorEl = document.createElement('div');
-    errorEl.className = 'error-message';
-    errorEl.textContent = message;
-    document.body.appendChild(errorEl);
-    
-    setTimeout(() => {
-        errorEl.remove();
-    }, 3000);
-}
-
-function showStrategyResults(strategyType, results) {
-    const resultContainer = document.createElement('div');
-    resultContainer.className = 'strategy-results';
-    resultContainer.innerHTML = `
-        <h3>${strategyType} 전략 결과</h3>
-        <div class="results-list">
-            ${results.selected_stocks.map(stock => `
-                <div class="stock-item">
-                    <span class="symbol">${stock.symbol}</span>
-                    <span class="score">${stock.score.toFixed(2)}</span>
-                </div>
-            `).join('')}
-        </div>
-    `;
-    
-    document.querySelector(`#${strategyType}-chart`).parentNode.appendChild(resultContainer);
-}
-
-function updateStrategyChart(strategyType, results) {
-    const chart = charts[strategyType];
-    const labels = results.selected_stocks.map(s => s.symbol);
-    const data = results.selected_stocks.map(s => s.score);
-    
-    chart.updateData(labels, data);
-}
-
-function updateBacktestResults(metrics) {
-    document.getElementById('return-rate').textContent = `${metrics.total_return.toFixed(2)}%`;
-    document.getElementById('sharpe-ratio').textContent = metrics.sharpe_ratio.toFixed(2);
-    document.getElementById('max-drawdown').textContent = `${metrics.max_drawdown.toFixed(2)}%`;
-    
-    // 백테스트 차트 업데이트
-    const backtestChart = new ChartComponent('backtest-chart');
-    backtestChart.initialize();
-    backtestChart.updateData(metrics.dates, metrics.equity_curve);
-}
-
-function updateBacktestChart() {
-    const strategy = document.getElementById('strategy-select').value;
-    // 차트 업데이트 로직
-    console.log(`백테스트 차트 업데이트: ${strategy}`);
-}
-
-function loadPortfolioData() {
-    // 포트폴리오 데이터 로딩
-    const mockPortfolio = {
-        totalAssets: '100,000,000',
-        dailyReturn: '+1.2%',
-        annualReturn: '+15.5%',
-        holdings: [
-            { name: '삼성전자', quantity: 100, avgPrice: '70,000', currentPrice: '72,000', profit: '+200,000' },
-            { name: 'SK하이닉스', quantity: 50, avgPrice: '120,000', currentPrice: '125,000', profit: '+250,000' }
-        ]
-    };
-
-    // 포트폴리오 데이터 표시
-    document.getElementById('total-assets').textContent = mockPortfolio.totalAssets;
-    document.getElementById('daily-return').textContent = mockPortfolio.dailyReturn;
-    document.getElementById('annual-return').textContent = mockPortfolio.annualReturn;
-
-    // 보유 종목 테이블 업데이트
-    const tbody = document.querySelector('#holdings-table tbody');
-    tbody.innerHTML = '';
-    mockPortfolio.holdings.forEach(holding => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${holding.name}</td>
-            <td>${holding.quantity}</td>
-            <td>${holding.avgPrice}</td>
-            <td>${holding.currentPrice}</td>
-            <td>${holding.profit}</td>
-        `;
-        tbody.appendChild(row);
-    });
-}
-
-function handleNavigation(e) {
-    e.preventDefault();
-    const targetId = e.target.getAttribute('href').substring(1);
-    const targetSection = document.getElementById(targetId);
-    targetSection.scrollIntoView({ behavior: 'smooth' });
 }
 
 function updatePortfolioDisplay(portfolio) {
