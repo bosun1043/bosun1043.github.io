@@ -228,7 +228,7 @@ function generateMockData(strategyType, params = {}) {
 // 전략 실행
 function runStrategy(strategyType) {
     try {
-        showLoading(`${strategyType} 전략을 실행 중입니다...`);
+        showLoading(`${strategyType} 전략 분석 중...`);
         
         // 전략별 파라미터 가져오기
         let params = {};
@@ -262,7 +262,7 @@ function runStrategy(strategyType) {
                     showMomentumResults(mockData);
                 } else if (strategyType === 'value') {
                     showValueResults(mockData);
-                } else if (strategyType === 'quality') {
+                } else {
                     updateStrategyChart(strategyType, mockData);
                     showStrategyResults(strategyType, mockData);
                 }
@@ -637,184 +637,6 @@ function showValueResults(results) {
                                 title: {
                                     display: true,
                                     text: '선정 종목 밸류 점수'
-                                }
-                            }
-                        }
-                    });
-                </script>
-            </body>
-            </html>
-        `);
-        
-        resultWindow.document.close();
-    } catch (error) {
-        console.error('결과 창 표시 중 오류 발생:', error);
-        showError(error.message || '결과를 표시할 수 없습니다.');
-    }
-}
-
-// 전략 차트 업데이트 함수
-function updateStrategyChart(strategyType, data) {
-    const chartId = `${strategyType}-chart`;
-    const chart = charts[strategyType];
-    
-    if (chart) {
-        // 차트 데이터 업데이트
-        chart.data.labels = data.selected_stocks.map(stock => stock.symbol);
-        chart.data.datasets[0].data = data.selected_stocks.map(stock => stock.score);
-        
-        // 차트 업데이트
-        chart.update();
-    }
-}
-
-// 전략 결과 표시 함수
-function showStrategyResults(strategyType, results) {
-    try {
-        // 새 창 생성
-        const resultWindow = window.open('', `${strategyType} 전략 결과`, 'width=800,height=600');
-        if (!resultWindow) {
-            throw new Error('팝업이 차단되었습니다. 팝업 차단을 해제해주세요.');
-        }
-        
-        // 새 창의 HTML 내용
-        resultWindow.document.write(`
-            <!DOCTYPE html>
-            <html lang="ko">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>${strategyType} 전략 결과</title>
-                <style>
-                    body {
-                        font-family: 'Noto Sans KR', sans-serif;
-                        margin: 0;
-                        padding: 20px;
-                        background-color: #f8f9fa;
-                    }
-                    .container {
-                        max-width: 800px;
-                        margin: 0 auto;
-                        background-color: white;
-                        padding: 20px;
-                        border-radius: 8px;
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                    }
-                    h1 {
-                        color: #2c3e50;
-                        margin-bottom: 20px;
-                    }
-                    .results-grid {
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                        gap: 20px;
-                        margin-bottom: 20px;
-                    }
-                    .result-card {
-                        background-color: #f8f9fa;
-                        padding: 15px;
-                        border-radius: 6px;
-                        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-                    }
-                    .stock-item {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        padding: 10px;
-                        background-color: white;
-                        border-radius: 4px;
-                        margin-bottom: 10px;
-                        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-                    }
-                    .symbol {
-                        font-weight: 500;
-                        color: #2c3e50;
-                    }
-                    .details {
-                        display: flex;
-                        gap: 1rem;
-                        font-size: 0.9rem;
-                    }
-                    .score {
-                        color: #e74c3c;
-                        font-weight: 500;
-                    }
-                    .roe, .margin {
-                        color: #666;
-                    }
-                    .chart-container {
-                        margin-top: 20px;
-                        height: 300px;
-                    }
-                    .summary {
-                        margin-top: 20px;
-                        padding: 15px;
-                        background-color: #e8f4f8;
-                        border-radius: 6px;
-                    }
-                    .summary h3 {
-                        color: #2c3e50;
-                        margin-bottom: 10px;
-                    }
-                    .summary p {
-                        margin: 5px 0;
-                        color: #34495e;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <h1>${strategyType} 전략 결과</h1>
-                    <div class="results-grid">
-                        <div class="result-card">
-                            <h3>선정 종목</h3>
-                            ${results.selected_stocks.map(stock => `
-                                <div class="stock-item">
-                                    <span class="symbol">${stock.symbol}</span>
-                                    <div class="details">
-                                        <span class="score">종합점수: ${stock.score.toFixed(2)}</span>
-                                        <span class="roe">ROE: ${stock.details.roe}%</span>
-                                        <span class="margin">영업이익률: ${stock.details.margin}%</span>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <div class="result-card">
-                            <h3>전략 요약</h3>
-                            <div class="summary">
-                                <p>평균 ${strategyType} 점수: ${(results.selected_stocks.reduce((acc, curr) => acc + curr.score, 0) / results.selected_stocks.length).toFixed(2)}</p>
-                                <p>최고 ${strategyType} 점수: ${Math.max(...results.selected_stocks.map(s => s.score)).toFixed(2)}</p>
-                                <p>최저 ${strategyType} 점수: ${Math.min(...results.selected_stocks.map(s => s.score)).toFixed(2)}</p>
-                                <p>평균 ROE: ${(results.selected_stocks.reduce((acc, curr) => acc + parseFloat(curr.details.roe), 0) / results.selected_stocks.length).toFixed(2)}%</p>
-                                <p>평균 영업이익률: ${(results.selected_stocks.reduce((acc, curr) => acc + parseFloat(curr.details.margin), 0) / results.selected_stocks.length).toFixed(2)}%</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="${strategyType}-chart"></canvas>
-                    </div>
-                </div>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <script>
-                    // 차트 생성
-                    const ctx = document.getElementById('${strategyType}-chart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ${JSON.stringify(results.selected_stocks.map(s => s.symbol))},
-                            datasets: [{
-                                label: '${strategyType} 점수',
-                                data: ${JSON.stringify(results.selected_stocks.map(s => s.score))},
-                                backgroundColor: '#e74c3c'
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                title: {
-                                    display: true,
-                                    text: '선정 종목 ${strategyType} 점수'
                                 }
                             }
                         }
