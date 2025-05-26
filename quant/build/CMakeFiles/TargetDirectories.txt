@@ -1,0 +1,3 @@
+/Users/jessicakang/Desktop/25-1/컴프/project/quant/build/CMakeFiles/quant_strategy.dir
+/Users/jessicakang/Desktop/25-1/컴프/project/quant/build/CMakeFiles/edit_cache.dir
+/Users/jessicakang/Desktop/25-1/컴프/project/quant/build/CMakeFiles/rebuild_cache.dir
