@@ -186,18 +186,35 @@ h2 {
 
 /* 시장동향 스타일 */
 .market-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+#news-headlines {
+    flex: 1;
+    min-width: 300px;
+    max-width: 350px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
 }
 
 #tradingview-widget {
-    height: 500px;
+    flex: 3;
+    min-width: 400px;
+    height: 450px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .market-news {
     background: #fff;
-    padding: 1.5rem;
+    padding: 1.0rem;
     border-radius: 8px;
 }
 
@@ -216,10 +233,56 @@ h2 {
     }
     
     main {
-        padding: 1rem;
+        padding: 1.0rem;
     }
     
     .backtest-controls {
         flex-direction: column;
     }
+    
+    #news-headlines,
+    #tradingview-widget {
+        flex: none;
+        width: 100%;
+        max-width: none;
+        min-width: auto;
+    }
+}
+
+#news-headlines h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+#news-headlines ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#news-headlines li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    color: #444;
+    font-size: 0.95em;
+}
+
+#news-headlines li:last-child {
+    border-bottom: none;
+}
+
+#news-headlines .news-source {
+    margin-top: 15px;
+    font-size: 0.8em;
+    color: #666;
+}
+
+#news-headlines .news-source a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+#news-headlines .news-source a:hover {
+    text-decoration: underline;
 } 
