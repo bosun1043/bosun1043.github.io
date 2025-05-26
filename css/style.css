@@ -285,4 +285,76 @@ h2 {
 
 #news-headlines .news-source a:hover {
     text-decoration: underline;
+}
+
+#market-indicators {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.indicator-item {
+    text-align: center;
+    margin: 5px 10px;
+}
+
+.indicator-label {
+    display: block;
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.indicator-value {
+    display: block;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+}
+
+.indicator-change {
+    display: block;
+    font-size: 0.9em;
+}
+
+.indicator-change.positive {
+    color: #28a745;
+}
+
+.indicator-change.negative {
+    color: #dc3545;
+}
+
+#introduction {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+#introduction h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+#introduction p {
+    color: #555;
+    margin-bottom: 10px;
+    font-size: 1.0rem;
+}
+
+#introduction .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#introduction .container p:last-child {
+    margin-bottom: 0;
 } 
