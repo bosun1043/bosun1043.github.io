@@ -364,3 +364,128 @@ h2 {
     position: absolute;
     left: -1.5rem;
 }
+
+.step {
+    display: none;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.step.active {
+    display: block;
+}
+
+.stock-list {
+    margin: 20px 0;
+}
+
+.stock-item {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.strategy-card {
+    cursor: pointer;
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.strategy-card.selected {
+    border-color: #3498db;
+    background-color: #f7f9fc;
+}
+
+.selected-stocks {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f7f9fc;
+    border-radius: 5px;
+}
+
+#selected-stocks-list {
+    margin-top: 10px;
+}
+
+#selected-stocks-list div {
+    padding: 5px 0;
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.error-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.price {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.change {
+    margin-left: 10px;
+}
+
+.change.up {
+    color: #e74c3c;
+}
+
+.change.down {
+    color: #3498db;
+}
+
+/* 기존 CSS에 추가 */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.back-button {
+    background-color: #95a5a6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #7f8c8d;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}

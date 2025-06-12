@@ -13,191 +13,129 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>퀀트 트레이딩 시스템</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">홈</a></li>
-                <li><a href="#strategy">전략</a></li>
-                <li><a href="#backtest">백테스트</a></li>
-                <li><a href="#portfolio">포트폴리오</a></li>
-                <li><a href="#market">시장동향</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Step 1: Welcome Page -->
+    <section id="welcome" class="step active">
+        <h1>제시카 퀀트 트레이딩</h1>
+        <p>데이터 기반의 객관적인 투자 전략을 만나보세요</p>
+        <div class="button-group">
+            <button id="start-button">시작하기</button>
+        </div>
+    </section>
 
-    <main>
-        <section id="home">
-            <h2>퀀트 트레이딩 소개</h2>
-            
-            <!-- 기존 대시보드 -->
-            <!-- <div class="dashboard">
-                <div class="market-overview">
-                    <h3>시장 개요</h3>
-                    <div id="market-indicators"></div>
-                </div> -->
-                <div class="quick-stats">
-                    <div class="stat-card">
-                        <h4>KOSPI</h4>
-                        <p id="kospi-value">Loading...</p>
-                    </div>
-                    <div class="stat-card">
-                        <h4>KOSDAQ</h4>
-                        <p id="kosdaq-value">Loading...</p>
-                    </div>
-                    <div class="stat-card">
-                        <h4>USD/KRW</h4>
-                        <p id="exchange-rate">Loading...</p>
-                    </div>
+    <!-- Step 2: Stock Selection -->
+    <section id="stock-selection" class="step">
+        <h2>Step 1: 관심 있는 종목을 선택해주세요</h2>
+        <div class="stock-list">
+            <!-- 동적으로 생성될 종목 목록 -->
+        </div>
+        <div class="button-group">
+            <button id="back-to-welcome" class="back-button">이전</button>
+            <button id="to-strategy-button">다음</button>
+        </div>
+    </section>
+
+    <!-- Step 3: Strategy Selection -->
+    <section id="strategy-selection" class="step">
+        <h2>Step 2: 원하는 퀀트 전략을 선택해주세요</h2>
+        <div class="selected-stocks">
+            <h3>선택된 종목</h3>
+            <div id="selected-stocks-list"></div>
+        </div>
+        <div class="strategy-cards">
+            <div class="strategy-card" data-strategy="value">
+                <h3>밸류 전략</h3>
+                <p>PER, PBR 기반 저평가 종목 선정</p>
+            </div>
+            <div class="strategy-card" data-strategy="quality">
+                <h3>퀄리티 전략</h3>
+                <p>ROE, 영업이익률 기반 우량 기업 선정</p>
+            </div>
+            <div class="strategy-card" data-strategy="momentum">
+                <h3>모멘텀 전략</h3>
+                <p>가격 추세 기반 단기 수익 추구</p>
+            </div>
+            <div class="strategy-card" data-strategy="hybrid">
+                <h3>하이브리드 전략</h3>
+                <p>세 전략의 조합으로 균형잡힌 접근</p>
+            </div>
+        </div>
+        <div class="button-group">
+            <button id="back-to-stocks" class="back-button">이전</button>
+            <button id="to-parameter-button">다음</button>
+        </div>
+    </section>
+
+    <!-- Step 4: Parameter Setting -->
+    <section id="parameter-setting" class="step">
+        <h2>Step 3: 전략 파라미터를 조정해주세요</h2>
+        <div class="parameter-controls">
+            <div class="parameter-group">
+                <h3>가중치 설정</h3>
+                <div class="slider-group">
+                    <label>ROE 가중치</label>
+                    <input type="range" id="roe-weight" min="0" max="100" value="50">
+                </div>
+                <div class="slider-group">
+                    <label>영업이익률 가중치</label>
+                    <input type="range" id="margin-weight" min="0" max="100" value="50">
                 </div>
             </div>
-
-            <!-- 소개 내용 추가 -->
-            <div class="container">
-                <h3>제시카 퀀트 월드에 오신 것을 환영합니다!</h3>
-                
-                <p>안녕하세요, 제시카 퀀트 월드입니다. 저희 플랫폼은 데이터 기반의 객관적인 투자 의사결정을 도와드리는 퀀트 트레이딩 솔루션을 제공합니다.</p>
-                
-                <p>제시카 퀀트 월드는 다음과 같은 특징을 가지고 있습니다:</p>
-                
-                <ul>
-                    <li>실시간 시장 데이터 분석 및 시각화</li>
-                    <li>검증된 퀀트 전략 백테스팅 및 최적화</li>
-                    <li>포트폴리오 자산 배분 및 리밸런싱</li>
-                    <li>시장 동향 및 뉴스 모니터링</li>
-                </ul>
-                
-                <p>저희 플랫폼은 복잡한 금융 시장을 이해하기 쉽게 분석하고, 데이터에 기반한 투자 결정을 내릴 수 있도록 도와드립니다. 감정에 휘둘리지 않는 객관적인 투자 전략을 통해 더 나은 투자 성과를 달성하실 수 있습니다.</p>
-                
-                <p>제시카 퀀트 월드와 함께라면, 누구나 전문가 수준의 퀀트 트레이딩을 경험하실 수 있습니다. 지금 바로 시작해보세요!</p>
+            <div class="parameter-group">
+                <h3>투자 기간</h3>
+                <select id="investment-period">
+                    <option value="1">1개월</option>
+                    <option value="3">3개월</option>
+                    <option value="6">6개월</option>
+                    <option value="12" selected>1년</option>
+                    <option value="24">2년</option>
+                </select>
             </div>
-        </section>
+            <div class="parameter-group">
+                <h3>리밸런싱 주기</h3>
+                <select id="rebalancing-period">
+                    <option value="1">매일</option>
+                    <option value="7">매주</option>
+                    <option value="30" selected>매월</option>
+                    <option value="90">분기별</option>
+                </select>
+            </div>
+        </div>
+        <div class="button-group">
+            <button id="back-to-strategy" class="back-button">이전</button>
+            <button id="run-strategy-button">전략 실행</button>
+        </div>
+    </section>
 
-        <section id="strategy">
-            <h2>투자 전략</h2>
-            <div class="strategy-container">
-                <div class="strategy-card">
-                    <h3>모멘텀 전략</h3>
-                    <p>12개월 수익률 기반 모멘텀 전략</p>
-                    <div class="strategy-chart">
-                        <canvas id="momentum-chart"></canvas>
-                    </div>
-                    <button class="strategy-btn" onclick="runStrategy('momentum')">전략 실행</button>
+    <!-- Step 5: Results -->
+    <section id="results" class="step">
+        <h2>퀀트 전략 분석 결과</h2>
+        <div class="results-container">
+            <div class="performance-metrics">
+                <div class="metric">
+                    <h3>예상 수익률</h3>
+                    <p id="expected-return">-</p>
                 </div>
-                <div class="strategy-card">
-                    <h3>밸류 전략</h3>
-                    <p>PER, PBR 기반 밸류 전략</p>
-                    <div class="strategy-chart">
-                        <canvas id="value-chart"></canvas>
-                    </div>
-                    <button class="strategy-btn" onclick="runStrategy('value')">전략 실행</button>
+                <div class="metric">
+                    <h3>예상 변동성</h3>
+                    <p id="volatility">-</p>
                 </div>
-                <div class="strategy-card">
-                    <h3>퀄리티 전략</h3>
-                    <p>ROE, 영업이익률 기반 퀄리티 전략</p>
-                    <div class="strategy-chart">
-                        <canvas id="quality-chart"></canvas>
-                    </div>
-                    <button class="strategy-btn" onclick="runStrategy('quality')">전략 실행</button>
+                <div class="metric">
+                    <h3>샤프 비율</h3>
+                    <p id="sharpe-ratio">-</p>
                 </div>
             </div>
-        </section>
-
-        <section id="backtest">
-            <h2>백테스트 결과</h2>
-            <div class="backtest-container">
-                <div class="backtest-controls">
-                    <select id="strategy-select">
-                        <option value="momentum">모멘텀 전략</option>
-                        <option value="value">밸류 전략</option>
-                        <option value="quality">퀄리티 전략</option>
-                    </select>
-                    <input type="date" id="start-date">
-                    <input type="date" id="end-date">
-                    <button onclick="runBacktest()">백테스트 실행</button>
-                </div>
-                <div class="backtest-results">
-                    <div class="performance-metrics">
-                        <div class="metric">
-                            <h4>수익률</h4>
-                            <p id="return-rate">-</p>
-                        </div>
-                        <div class="metric">
-                            <h4>샤프 비율</h4>
-                            <p id="sharpe-ratio">-</p>
-                        </div>
-                        <div class="metric">
-                            <h4>최대 낙폭</h4>
-                            <p id="max-drawdown">-</p>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="backtest-chart"></canvas>
-                    </div>
-                </div>
+            <div class="chart-container">
+                <canvas id="performance-chart"></canvas>
             </div>
-        </section>
-
-        <section id="portfolio">
-            <h2>포트폴리오</h2>
-            <div class="portfolio-container">
-                <div class="portfolio-summary">
-                    <h3>포트폴리오 현황</h3>
-                    <div class="portfolio-stats">
-                        <div class="stat">
-                            <h4>총 자산</h4>
-                            <p id="total-assets">-</p>
-                        </div>
-                        <div class="stat">
-                            <h4>일간 수익률</h4>
-                            <p id="daily-return">-</p>
-                        </div>
-                        <div class="stat">
-                            <h4>연간 수익률</h4>
-                            <p id="annual-return">-</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="portfolio-holdings">
-                    <h3>보유 종목</h3>
-                    <table id="holdings-table">
-                        <thead>
-                            <tr>
-                                <th>종목명</th>
-                                <th>수량</th>
-                                <th>평균단가</th>
-                                <th>현재가</th>
-                                <th>평가손익</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- 동적으로 채워질 예정 -->
-                        </tbody>
-                    </table>
-                </div>
+            <div class="stock-analysis">
+                <!-- 동적으로 생성될 종목별 분석 -->
             </div>
-        </section>
-
-        <section id="market">
-            <h2>시장 동향</h2>
-            <div class="market-container">
-                <div id="news-headlines">
-                    <h3>주요 뉴스 헤드라인</h3>
-                    <ul>
-                        <li>해수부, 식약처와 여름 수산물 안전관리 합동점검</li>
-                        <li>동서발전 사장 "2040년까지 신재생발전 비중 44%로 확대"</li>
-                        <li>"우리 집주인이 전세사기범?" 내일부터 미리 알수 있다</li>
-                        <li>달러-원 환율, 11.2원 하락…1364.4원에 마감</li>
-                        <li>경제계-국회 소통 강화한다…대한상의, '대외협력위' 출범</li>
-                        <li>한화 방산3사, MADEX 2025 통합관 운영…미래 통합 설루션 제시</li>
-                        <li>모간스탠리 "한은, 올해 성장률전망 1.0∼1.1%로 인하할 듯"</li>
-                    </ul>
-                    <p class="news-source">출처: 네이버 경제 뉴스 (<a href="https://news.naver.com/section/101" target="_blank">https://news.naver.com/section/101</a>)</p>
-                </div>
-                <div id="tradingview-widget"></div>
-            </div>
-        </section>
-    </main>
+        </div>
+        <div class="button-group">
+            <button id="back-to-parameter" class="back-button">이전</button>
+            <button id="restart-button">다시 시작하기</button>
+        </div>
+    </section>
 
     <footer>
         <p>&copy; 2024 퀀트 트레이딩 시스템. All rights reserved.</p>
