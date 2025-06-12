@@ -1,60 +1,94 @@
-#include "QuantStrategy.hpp"
+// main.cpp
+#include "QuantStrategyManager.hpp"
+#include "QualityStrategy.hpp"
+#include "StrategyWeights.hpp"
 #include <iostream>
-#include <vector>
 #include <iomanip>
+#include <memory>
 
 int main() {
-    // 전략 인스턴스 생성
-    QuantStrategy strategy(0.6, 0.4, 10, 5); // ROE 가중치 60%, 영업이익률 가중치 40%
+    std::cout << "=== Quant Strategy System v2.0 ===" << std::endl;
     
-    // 샘플 주식 데이터
-    std::vector<StockData> stocks = {
-        {"삼성전자", 15.5, 12.3, 0.0},
-        {"SK하이닉스", 18.2, 14.5, 0.0},
-        {"LG에너지솔루션", 12.8, 8.9, 0.0},
-        {"NAVER", 20.5, 16.7, 0.0},
-        {"카카오", 8.5, 6.2, 0.0},
-        {"현대차", 14.2, 10.8, 0.0},
-        {"기아", 16.8, 11.5, 0.0},
-        {"POSCO홀딩스", 9.8, 7.4, 0.0},
-        {"KB금융", 11.2, 8.1, 0.0},
-        {"신한지주", 10.5, 7.8, 0.0}
+    // 1. 전략 매니저 초기화 (초기 자금 1억원)
+    QuantStrategyManager manager(100000000.0);
+    
+    // 2. 퀄리티 전략 설정
+    StrategyWeights weights(0.4, 0.3, 0.2, 0.1, 0.0, 10, 5); // ROE 40%, 마진 30%, PER 20%, PBR 10%
+    auto qualityStrategy = std::make_unique<QualityStrategy>(weights, 5);
+    
+    std::cout << "전략: " << qualityStrategy->getName() << std::endl;
+    std::cout << "설명: " << qualityStrategy->getDescription() << std::endl << std::endl;
+    
+    manager.setStrategy(std::move(qualityStrategy));
+    
+    // 3. 투자 대상 종목 선택 (전체 종목)
+    std::vector<std::string> selectedStocks = {
+        "005930", "000660", "005935", "035420", "035720",
+        "005830", "000270", "000890", "000810", "000240"
     };
     
-    // 퀄리티 전략 실행
-    auto results = strategy.executeQualityStrategy(stocks);
+    // 4. 전략 실행
+    std::cout << "전략 실행 중..." << std::endl;
+    auto recommendedStocks = manager.executeStrategy(selectedStocks);
     
-    // 결과 출력
-    std::cout << "퀄리티 전략 선정 종목:\n";
+    // 5. 결과 출력
+    std::cout << "\n=== 퀄리티 전략 추천 종목 ===" << std::endl;
     std::cout << std::fixed << std::setprecision(2);
     
-    for (const auto& stock : results) {
-        std::cout << "종목: " << stock.symbol << "\n"
-                  << "ROE: " << stock.roe << "%\n"
-                  << "영업이익률: " << stock.margin << "%\n"
-                  << "종합점수: " << stock.score << "\n\n";
+    for (size_t i = 0; i < recommendedStocks.size(); ++i) {
+        const auto& stock = recommendedStocks[i];
+        std::cout << "[" << (i+1) << "] " << stock.toString() << std::endl;
     }
     
-    // 평균값 계산
-    double avgScore = 0.0;
-    double avgRoe = 0.0;
-    double avgMargin = 0.0;
+    // 6. 포트폴리오 정보
+    std::cout << "\n=== 포트폴리오 정보 ===" << std::endl;
+    auto portfolio = manager.getPortfolio();
+    std::cout << "총 자산: " << portfolio->getTotalValue() << "원" << std::endl;
+    std::cout << "현금: " << portfolio->getCash() << "원" << std::endl;
+    std::cout << "현금 비율: " << portfolio->getCashRatio() << "%" << std::endl;
     
-    for (const auto& stock : results) {
-        avgScore += stock.score;
-        avgRoe += stock.roe;
-        avgMargin += stock.margin;
+    // 7. 성과 지표
+    auto metrics = manager.getPerformanceMetrics();
+    std::cout << "\n=== 성과 지표 ===" << std::endl;
+    for (const auto& metric : metrics) {
+        std::cout << metric.first << ": " << metric.second << std::endl;
     }
     
-    if (!results.empty()) {
-        avgScore /= results.size();
-        avgRoe /= results.size();
-        avgMargin /= results.size();
+    // 8. 백테스트 실행 (예시)
+    std::cout << "\n=== 백테스트 결과 ===" << std::endl;
+    auto backtestResult = manager.runBacktest(selectedStocks);
+    std::cout << "예상 수익률: " << backtestResult.expectedReturn << "%" << std::endl;
+    std::cout << "변동성: " << backtestResult.volatility << "%" << std::endl;
+    std::cout << "샤프 비율: " << backtestResult.sharpeRatio << std::endl;
+    
+    // 9. 추천 종목에 투자 시뮬레이션
+    std::cout << "\n=== 투자 시뮬레이션 ===" << std::endl;
+    double investmentPerStock = 20000000.0; // 종목당 2천만원
+    
+    for (const auto& stock : recommendedStocks) {
+        double shares = investmentPerStock / stock.currentPrice;
+        bool success = portfolio->enterPosition(stock.symbol, shares, stock.currentPrice);
         
-        std::cout << "평균 퀄리티 점수: " << avgScore << "\n"
-                  << "평균 ROE: " << avgRoe << "%\n"
-                  << "평균 영업이익률: " << avgMargin << "%\n";
+        if (success) {
+            std::cout << stock.name << " (" << stock.symbol << "): " 
+                      << shares << "주 매수 (" << investmentPerStock << "원)" << std::endl;
+        } else {
+            std::cout << stock.name << " (" << stock.symbol << "): 자금 부족으로 매수 실패" << std::endl;
+        }
+    }
+    
+    // 10. 최종 포트폴리오 상태
+    std::cout << "\n=== 최종 포트폴리오 ===" << std::endl;
+    std::cout << "총 자산: " << portfolio->getTotalValue() << "원" << std::endl;
+    std::cout << "남은 현금: " << portfolio->getCash() << "원" << std::endl;
+    
+    auto positions = portfolio->getPositions();
+    std::cout << "\n보유 종목:" << std::endl;
+    for (const auto& pos : positions) {
+        std::cout << "- " << pos.first << ": " 
+                  << pos.second.getShares() << "주, "
+                  << "가치: " << pos.second.getCurrentValue() << "원" << std::endl;
     }
     
     return 0;
-} 
+}
