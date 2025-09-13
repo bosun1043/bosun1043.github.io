@@ -20,8 +20,15 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         initializeNavigation();
         setupEventListeners();
-    }, 200);
+    }, 500);
 });
+
+// 최종 안전장치 - 1초 후에도 한 번 더 시도
+setTimeout(() => {
+    console.log('최종 초기화 시도');
+    initializeNavigation();
+    setupEventListeners();
+}, 1000);
 
 function initializeApp() {
     console.log('initializeApp 시작');
