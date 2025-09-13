@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>퀀트 트레이딩 시스템</title>
+    <title>강보선 - 포트폴리오</title>
     <!-- Chart.js for 데이터 시각화 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- TradingView Widget -->
@@ -13,14 +13,106 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Step 1: Welcome Page -->
-    <section id="welcome" class="step active">
-        <h1>제시카 퀀트 트레이딩</h1>
-        <p>안녕하세요. 강보선의 퀀트 월드에 오신걸 환영합니다. 여기서는 다양한 퀀트 전략을 선택해서, 각 전략의 차이점과, 주식 시뮬레이션을할 수 있습니다. 데이터 기반의 객관적인 투자 전략을 만나보세요</p>
-        <div class="button-group">
-            <button id="start-button">시작하기</button>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>강보선</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#for-jun" class="nav-link">For Jun</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>안녕하세요, 강보선입니다</h1>
+                <p class="hero-subtitle">데이터 기반의 혁신적인 솔루션을 만드는 개발자</p>
+                <div class="hero-buttons">
+                    <a href="#about" class="btn btn-primary">더 알아보기</a>
+                    <a href="#for-jun" class="btn btn-secondary">프로젝트 보기</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="profile-card">
+                    <div class="profile-img"></div>
+                    <h3>강보선</h3>
+                    <p>Quantitative Developer</p>
+                </div>
+            </div>
         </div>
     </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>데이터 분석과 퀀트 트레이딩에 열정을 가진 개발자입니다. 복잡한 금융 데이터를 분석하고, 효율적인 알고리즘을 개발하여 투자 전략을 최적화하는 것을 목표로 합니다.</p>
+                    <div class="skills">
+                        <h3>Skills</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Quantitative Analysis</span>
+                            <span class="skill-tag">Algorithm Development</span>
+                            <span class="skill-tag">Data Visualization</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2>Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>퀀트 트레이딩 시스템</h3>
+                    <p>다양한 퀀트 전략을 구현하고 백테스팅을 수행하는 시스템</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">C++</span>
+                        <span class="tech-tag">Algorithm</span>
+                    </div>
+                    <a href="#for-jun" class="project-link">자세히 보기</a>
+                </div>
+                <div class="project-card">
+                    <h3>포트폴리오 최적화</h3>
+                    <p>리스크와 수익률을 고려한 포트폴리오 구성 알고리즘</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">C++</span>
+                        <span class="tech-tag">Optimization</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Jun Section (기존 퀀트 트레이딩 시스템) -->
+    <section id="for-jun" class="section">
+        <div class="container">
+            <h2>For Jun - 퀀트 트레이딩 시스템</h2>
+            <p class="section-description">다양한 퀀트 전략을 선택하고 백테스팅을 수행할 수 있는 시스템입니다.</p>
+            
+            <!-- Step 1: Welcome Page -->
+            <div id="welcome" class="step active">
+                <h3>퀀트 트레이딩 시스템</h3>
+                <p>안녕하세요. 강보선의 퀀트 월드에 오신걸 환영합니다. 여기서는 다양한 퀀트 전략을 선택해서, 각 전략의 차이점과, 주식 시뮬레이션을할 수 있습니다. 데이터 기반의 객관적인 투자 전략을 만나보세요</p>
+                <div class="button-group">
+                    <button id="start-button">시작하기</button>
+                </div>
+            </div>
 
     <!-- Step 2: Stock Selection -->
     <section id="stock-selection" class="step">
@@ -137,8 +229,49 @@
         </div>
     </section>
 
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2>Contact</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>연락처</h3>
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <span class="contact-value">bosun1043@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">GitHub:</span>
+                        <span class="contact-value">github.com/bosun1043</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Location:</span>
+                        <span class="contact-value">Seoul, South Korea</span>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>메시지 보내기</h3>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="이름" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="이메일" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="메시지" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">메시지 전송</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        <p>&copy; 2024 퀀트 트레이딩 시스템. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2024 강보선. All rights reserved.</p>
+        </div>
     </footer>
 
     <script src="js/main.js"></script>

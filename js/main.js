@@ -8,11 +8,53 @@ let marketData = {};
 // 페이지 로드 시 실행
 document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
+    initializeNavigation();
     loadTop10Stocks();
 });
 
 function initializeApp() {
     setupEventListeners();
+}
+
+// 네비게이션 시스템 초기화
+function initializeNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            
+            // 모든 섹션 숨기기
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // 모든 네비게이션 링크 비활성화
+            navLinks.forEach(navLink => {
+                navLink.classList.remove('active');
+            });
+            
+            // 선택된 섹션 보이기
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                link.classList.add('active');
+                
+                // For Jun 섹션으로 이동할 때 퀀트 시스템 초기화
+                if (targetId === 'for-jun') {
+                    initializeQuantSystem();
+                }
+            }
+        });
+    });
+}
+
+// 퀀트 시스템 초기화
+function initializeQuantSystem() {
+    // 퀀트 시스템의 첫 번째 단계로 이동
+    nextStep('welcome');
 }
 
 function setupEventListeners() {
