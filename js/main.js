@@ -7,6 +7,7 @@ let marketData = {};
 
 // 페이지 로드 시 실행
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded 이벤트 발생');
     initializeApp();
     initializeNavigation();
     loadTop10Stocks();
@@ -14,13 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 추가 안전장치 - window.onload도 사용
 window.addEventListener('load', () => {
+    console.log('window.load 이벤트 발생');
     // DOM이 완전히 로드된 후 네비게이션 재초기화
     setTimeout(() => {
         initializeNavigation();
-    }, 100);
+        setupEventListeners();
+    }, 200);
 });
 
 function initializeApp() {
+    console.log('initializeApp 시작');
     setupEventListeners();
 }
 
@@ -94,54 +98,126 @@ function initializeQuantSystem() {
 }
 
 function setupEventListeners() {
-    // 시작하기 버튼
+    console.log('setupEventListeners 시작');
+    
+    // 이벤트 위임을 사용하여 모든 버튼 이벤트 처리
+    document.addEventListener('click', (e) => {
+        console.log('클릭 이벤트 발생:', e.target);
+        
+        // 시작하기 버튼
+        if (e.target && e.target.id === 'start-button') {
+            console.log('시작하기 버튼 클릭');
+            e.preventDefault();
+            nextStep('stock-selection');
+            return;
+        }
+        
+        // 뒤로 가기 버튼들
+        if (e.target && e.target.id === 'back-to-welcome') {
+            console.log('welcome으로 돌아가기 버튼 클릭');
+            e.preventDefault();
+            nextStep('welcome');
+            return;
+        }
+        
+        if (e.target && e.target.id === 'back-to-stocks') {
+            console.log('stocks로 돌아가기 버튼 클릭');
+            e.preventDefault();
+            nextStep('stock-selection');
+            return;
+        }
+        
+        if (e.target && e.target.id === 'back-to-strategy') {
+            console.log('strategy로 돌아가기 버튼 클릭');
+            e.preventDefault();
+            nextStep('strategy-selection');
+            return;
+        }
+        
+        if (e.target && e.target.id === 'back-to-parameter') {
+            console.log('parameter로 돌아가기 버튼 클릭');
+            e.preventDefault();
+            nextStep('parameter-setting');
+            return;
+        }
+        
+        // 다음 단계 버튼들
+        if (e.target && e.target.id === 'to-strategy-button') {
+            console.log('strategy로 가기 버튼 클릭');
+            e.preventDefault();
+            nextStep('strategy-selection');
+            return;
+        }
+        
+        if (e.target && e.target.id === 'to-parameter-button') {
+            console.log('parameter로 가기 버튼 클릭');
+            e.preventDefault();
+            nextStep('parameter-setting');
+            return;
+        }
+        
+        // 전략 실행 버튼
+        if (e.target && e.target.id === 'run-strategy-button') {
+            console.log('전략 실행 버튼 클릭');
+            e.preventDefault();
+            runStrategy();
+            return;
+        }
+        
+        // 다시 시작하기 버튼
+        if (e.target && e.target.id === 'restart-button') {
+            console.log('다시 시작하기 버튼 클릭');
+            e.preventDefault();
+            restart();
+            return;
+        }
+    });
+    
+    // 기존 개별 이벤트 리스너들도 유지 (이중 안전장치)
     const startButton = document.getElementById('start-button');
     if (startButton) {
-        startButton.addEventListener('click', () => nextStep('stock-selection'));
+        startButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('개별 이벤트: 시작하기 버튼 클릭');
+            nextStep('stock-selection');
+        });
     }
 
-    // 뒤로 가기 버튼들
-    const backToWelcome = document.getElementById('back-to-welcome');
-    if (backToWelcome) {
-        backToWelcome.addEventListener('click', () => nextStep('welcome'));
-    }
-
-    const backToStocks = document.getElementById('back-to-stocks');
-    if (backToStocks) {
-        backToStocks.addEventListener('click', () => nextStep('stock-selection'));
-    }
-
-    const backToStrategy = document.getElementById('back-to-strategy');
-    if (backToStrategy) {
-        backToStrategy.addEventListener('click', () => nextStep('strategy-selection'));
-    }
-
-    const backToParameter = document.getElementById('back-to-parameter');
-    if (backToParameter) {
-        backToParameter.addEventListener('click', () => nextStep('parameter-setting'));
-    }
-
-    // 다음 단계 버튼들
+    // 나머지 버튼들도 개별 이벤트 리스너 추가
     const toStrategyButton = document.getElementById('to-strategy-button');
     if (toStrategyButton) {
-        toStrategyButton.addEventListener('click', () => nextStep('strategy-selection'));
+        toStrategyButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('개별 이벤트: strategy로 가기 버튼 클릭');
+            nextStep('strategy-selection');
+        });
     }
 
     const toParameterButton = document.getElementById('to-parameter-button');
     if (toParameterButton) {
-        toParameterButton.addEventListener('click', () => nextStep('parameter-setting'));
+        toParameterButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('개별 이벤트: parameter로 가기 버튼 클릭');
+            nextStep('parameter-setting');
+        });
     }
 
-    // 전략 실행 버튼
     const runStrategyButton = document.getElementById('run-strategy-button');
     if (runStrategyButton) {
-        runStrategyButton.addEventListener('click', runStrategy);
+        runStrategyButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('개별 이벤트: 전략 실행 버튼 클릭');
+            runStrategy();
+        });
     }
 
-    // 다시 시작하기 버튼
     const restartButton = document.getElementById('restart-button');
     if (restartButton) {
-        restartButton.addEventListener('click', restart);
+        restartButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('개별 이벤트: 다시 시작하기 버튼 클릭');
+            restart();
+        });
     }
 
     // 종목 선택 체크박스
@@ -644,35 +720,55 @@ function showSuccess(message) {
 function nextStep(stepId) {
     console.log('nextStep 호출:', stepId);
     
-    // 모든 단계 숨기기
-    const steps = document.querySelectorAll('.step');
-    console.log('찾은 step 요소들:', steps.length);
-    
-    steps.forEach(step => {
-        step.classList.remove('active');
-    });
-
-    // 선택한 단계 보이기
-    const nextStepElement = document.getElementById(stepId);
-    console.log('다음 단계 요소 찾음:', nextStepElement);
-    
-    if (nextStepElement) {
-        nextStepElement.classList.add('active');
-        console.log('단계 활성화 완료:', stepId);
+    try {
+        // 모든 단계 숨기기
+        const steps = document.querySelectorAll('.step');
+        console.log('찾은 step 요소들:', steps.length);
         
-        // 특정 단계에서 초기화 작업
-        if (stepId === 'strategy-selection') {
-            initializeCharts();
-        } else if (stepId === 'results') {
-            // 결과 페이지에서 추가 처리
-            updateResultsSummary();
+        if (steps.length === 0) {
+            console.warn('step 요소를 찾을 수 없습니다. DOM이 완전히 로드되지 않았을 수 있습니다.');
+            // 잠시 후 다시 시도
+            setTimeout(() => {
+                nextStep(stepId);
+            }, 100);
+            return;
         }
-    } else {
-        console.error('단계 요소를 찾을 수 없음:', stepId);
-    }
+        
+        steps.forEach(step => {
+            step.classList.remove('active');
+        });
 
-    // 스크롤을 페이지 상단으로 이동
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+        // 선택한 단계 보이기
+        const nextStepElement = document.getElementById(stepId);
+        console.log('다음 단계 요소 찾음:', nextStepElement);
+        
+        if (nextStepElement) {
+            nextStepElement.classList.add('active');
+            console.log('단계 활성화 완료:', stepId);
+            
+            // 특정 단계에서 초기화 작업
+            if (stepId === 'strategy-selection') {
+                initializeCharts();
+            } else if (stepId === 'results') {
+                // 결과 페이지에서 추가 처리
+                updateResultsSummary();
+            }
+        } else {
+            console.error('단계 요소를 찾을 수 없음:', stepId);
+            // 대안: 클래스명으로 찾기
+            const alternativeElement = document.querySelector(`.${stepId}`);
+            if (alternativeElement) {
+                console.log('대안 요소로 활성화:', alternativeElement);
+                alternativeElement.classList.add('active');
+            }
+        }
+
+        // 스크롤을 페이지 상단으로 이동
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+    } catch (error) {
+        console.error('nextStep 실행 중 오류:', error);
+    }
 }
 
 function updateResultsSummary() {
