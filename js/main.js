@@ -12,6 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTop10Stocks();
 });
 
+// 추가 안전장치 - window.onload도 사용
+window.addEventListener('load', () => {
+    // DOM이 완전히 로드된 후 네비게이션 재초기화
+    setTimeout(() => {
+        initializeNavigation();
+    }, 100);
+});
+
 function initializeApp() {
     setupEventListeners();
 }
@@ -21,40 +29,68 @@ function initializeNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('.section');
     
+    // 기존 이벤트 리스너 제거 (중복 방지)
     navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href').substring(1);
-            
-            // 모든 섹션 숨기기
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // 모든 네비게이션 링크 비활성화
-            navLinks.forEach(navLink => {
-                navLink.classList.remove('active');
-            });
-            
-            // 선택된 섹션 보이기
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                targetSection.classList.add('active');
-                link.classList.add('active');
-                
-                // For Jun 섹션으로 이동할 때 퀀트 시스템 초기화
-                if (targetId === 'for-jun') {
-                    initializeQuantSystem();
-                }
-            }
-        });
+        link.removeEventListener('click', handleNavClick);
+        link.addEventListener('click', handleNavClick);
     });
+}
+
+// 네비게이션 클릭 핸들러
+function handleNavClick(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href').substring(1);
+    console.log('네비게이션 클릭:', targetId);
+    
+    // 모든 섹션 숨기기
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // 모든 네비게이션 링크 비활성화
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(navLink => {
+        navLink.classList.remove('active');
+    });
+    
+    // 선택된 섹션 보이기
+    const targetSection = document.getElementById(targetId);
+    console.log('타겟 섹션 찾음:', targetSection);
+    
+    if (targetSection) {
+        targetSection.classList.add('active');
+        this.classList.add('active');
+        console.log('섹션 활성화 완료:', targetId);
+        
+        // For Jun 섹션으로 이동할 때 퀀트 시스템 초기화
+        if (targetId === 'for-jun') {
+            console.log('For Jun 섹션으로 이동 - 퀀트 시스템 초기화 시작');
+            setTimeout(() => {
+                initializeQuantSystem();
+            }, 200);
+        }
+    } else {
+        console.error('타겟 섹션을 찾을 수 없음:', targetId);
+    }
 }
 
 // 퀀트 시스템 초기화
 function initializeQuantSystem() {
     // 퀀트 시스템의 첫 번째 단계로 이동
-    nextStep('welcome');
+    try {
+        nextStep('welcome');
+    } catch (error) {
+        console.error('퀀트 시스템 초기화 오류:', error);
+        // 오류 발생 시 직접 welcome 단계 활성화
+        const welcomeStep = document.getElementById('welcome');
+        if (welcomeStep) {
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+            welcomeStep.classList.add('active');
+        }
+    }
 }
 
 function setupEventListeners() {
@@ -606,15 +642,23 @@ function showSuccess(message) {
 }
 
 function nextStep(stepId) {
+    console.log('nextStep 호출:', stepId);
+    
     // 모든 단계 숨기기
-    document.querySelectorAll('.step').forEach(step => {
+    const steps = document.querySelectorAll('.step');
+    console.log('찾은 step 요소들:', steps.length);
+    
+    steps.forEach(step => {
         step.classList.remove('active');
     });
 
     // 선택한 단계 보이기
     const nextStepElement = document.getElementById(stepId);
+    console.log('다음 단계 요소 찾음:', nextStepElement);
+    
     if (nextStepElement) {
         nextStepElement.classList.add('active');
+        console.log('단계 활성화 완료:', stepId);
         
         // 특정 단계에서 초기화 작업
         if (stepId === 'strategy-selection') {
@@ -623,6 +667,8 @@ function nextStep(stepId) {
             // 결과 페이지에서 추가 처리
             updateResultsSummary();
         }
+    } else {
+        console.error('단계 요소를 찾을 수 없음:', stepId);
     }
 
     // 스크롤을 페이지 상단으로 이동
