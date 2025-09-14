@@ -20,11 +20,11 @@
                 <h1>강보선</h1>
             </div>
             <ul class="nav-menu">
-                <li><a href="#home" class="nav-link active">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#for-jun" class="nav-link">For Jun</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#home" class="nav-link active" onclick="showSection('home')">Home</a></li>
+                <li><a href="#about" class="nav-link" onclick="showSection('about')">About</a></li>
+                <li><a href="#projects" class="nav-link" onclick="showSection('projects')">Projects</a></li>
+                <li><a href="#for-jun" class="nav-link" onclick="showSection('for-jun')">For Jun</a></li>
+                <li><a href="#contact" class="nav-link" onclick="showSection('contact')">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -157,23 +157,23 @@
                 <h3>퀀트 트레이딩 시스템</h3>
                 <p>안녕하세요. 강보선의 퀀트 월드에 오신걸 환영합니다. 여기서는 다양한 퀀트 전략을 선택해서, 각 전략의 차이점과, 주식 시뮬레이션을할 수 있습니다. 데이터 기반의 객관적인 투자 전략을 만나보세요</p>
                 <div class="button-group">
-                    <button id="start-button">시작하기</button>
+                    <button id="start-button" onclick="startQuant()">시작하기</button>
                 </div>
             </div>
 
-            <!-- Step 2: Stock Selection -->
+    <!-- Step 2: Stock Selection -->
             <div id="stock-selection" class="step">
         <h2>Step 1: 관심 있는 종목을 선택해주세요</h2>
         <div class="stock-list">
             <!-- 동적으로 생성될 종목 목록 -->
         </div>
         <div class="button-group">
-            <button id="back-to-welcome" class="back-button">이전</button>
-            <button id="to-strategy-button">다음</button>
+            <button id="back-to-welcome" class="back-button" onclick="goToWelcome()">이전</button>
+            <button id="to-strategy-button" onclick="goToStrategy()">다음</button>
         </div>
     </section>
 
-            <!-- Step 3: Strategy Selection -->
+    <!-- Step 3: Strategy Selection -->
             <div id="strategy-selection" class="step">
         <h2>Step 2: 원하는 퀀트 전략을 선택해주세요</h2>
         <div class="selected-stocks">
@@ -199,12 +199,12 @@
             </div>
         </div>
         <div class="button-group">
-            <button id="back-to-stocks" class="back-button">이전</button>
-            <button id="to-parameter-button">다음</button>
+            <button id="back-to-stocks" class="back-button" onclick="goToStocks()">이전</button>
+            <button id="to-parameter-button" onclick="goToParameter()">다음</button>
         </div>
     </section>
 
-            <!-- Step 4: Parameter Setting -->
+    <!-- Step 4: Parameter Setting -->
             <div id="parameter-setting" class="step">
         <h2>Step 3: 전략 파라미터를 조정해주세요</h2>
         <div class="parameter-controls">
@@ -240,12 +240,12 @@
             </div>
         </div>
         <div class="button-group">
-            <button id="back-to-strategy" class="back-button">이전</button>
-            <button id="run-strategy-button">전략 실행</button>
+            <button id="back-to-strategy" class="back-button" onclick="goToStrategy()">이전</button>
+            <button id="run-strategy-button" onclick="runStrategy()">전략 실행</button>
         </div>
     </section>
 
-            <!-- Step 5: Results -->
+    <!-- Step 5: Results -->
             <div id="results" class="step">
         <h2>퀀트 전략 분석 결과</h2>
         <div class="results-container">
@@ -271,8 +271,8 @@
             </div>
         </div>
         <div class="button-group">
-            <button id="back-to-parameter" class="back-button">이전</button>
-            <button id="restart-button">다시 시작하기</button>
+            <button id="back-to-parameter" class="back-button" onclick="goToParameter()">이전</button>
+            <button id="restart-button" onclick="restart()">다시 시작하기</button>
             </div>
         </div>
     </section>
