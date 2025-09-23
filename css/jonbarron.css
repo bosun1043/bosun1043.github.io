@@ -13,7 +13,7 @@
 .jb .bio-section,
 .jb .projects-grid,
 .jb .contact-content {
-    max-width: 900px;
+    max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -31,7 +31,7 @@
 
 .jb h2 {
     font-size: 1.4rem;
-    margin: 2rem 0 0.75rem 0;
+    margin: 1.25rem 0 0.5rem 0;
 }
 
 .jb h3 {
@@ -64,6 +64,15 @@
     box-shadow: none;
     border: 1px solid #eee;
     border-radius: 6px;
+}
+
+/* Reduce padding for a denser layout */
+.jb .cv-section,
+.jb .news-section,
+.jb .bio-section,
+.jb .contact-form,
+.jb .project-card {
+    padding: 0.9rem 1.0rem;
 }
 
 .jb .profile-card {
@@ -120,7 +129,7 @@
 .jb .contact-item { margin-bottom: 0.5rem; }
 
 /* Section spacing */
-.jb.section { padding: 1.25rem 0; }
+.jb.section { padding: 0.75rem 0; }
 
 /* Responsive */
 @media (max-width: 768px) {

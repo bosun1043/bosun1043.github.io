@@ -85,8 +85,8 @@ body {
 /* Section Styles */
 .section {
     display: none;
-    min-height: calc(100vh - var(--nav-height));
-    padding: 2rem 0;
+    min-height: auto;
+    padding: 1.25rem 0;
 }
 
 .section.active {
