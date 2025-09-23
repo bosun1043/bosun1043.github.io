@@ -77,6 +77,14 @@
     height: 140px;
 }
 
+.jb .profile-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
 /* Hero to simple two-column that collapses nicely */
 .jb .hero {
     grid-template-columns: 2fr 1fr;
