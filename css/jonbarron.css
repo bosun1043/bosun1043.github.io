@@ -1,0 +1,121 @@
+/* Jon Barron–style minimal academic theme (scoped). */
+/* Scope everything under .jb to avoid touching quant (#for-jun). */
+
+.jb {
+    background: #fff;
+    color: #000;
+}
+
+.jb .container,
+.jb .hero,
+.jb .cv-section,
+.jb .news-section,
+.jb .bio-section,
+.jb .projects-grid,
+.jb .contact-content {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Typography */
+.jb h1, .jb h2, .jb h3 {
+    font-weight: 600;
+    color: #000;
+}
+
+.jb h1 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.jb h2 {
+    font-size: 1.4rem;
+    margin: 2rem 0 0.75rem 0;
+}
+
+.jb h3 {
+    font-size: 1.05rem;
+    margin: 1rem 0 0.5rem 0;
+}
+
+.jb p, .jb li, .jb .contact-value, .jb .contact-label {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #111;
+}
+
+/* Links */
+.jb a {
+    color: #1772d0;
+    text-decoration: none;
+}
+
+.jb a:hover {
+    text-decoration: underline;
+}
+
+/* Layout: reduce cards and shadows for minimal look */
+.jb .cv-section,
+.jb .news-section,
+.jb .bio-section,
+.jb .project-card,
+.jb .contact-form {
+    box-shadow: none;
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+
+.jb .profile-card {
+    box-shadow: none;
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+
+.jb .profile-img {
+    width: 140px;
+    height: 140px;
+}
+
+/* Hero to simple two-column that collapses nicely */
+.jb .hero {
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.jb .hero-content h1 { font-size: 2rem; }
+.jb .hero-subtitle { font-size: 1rem; color: #333; margin-bottom: 0.75rem; }
+
+/* Projects */
+.jb .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.jb .project-card {
+    padding: 1rem 1.25rem;
+    border: 1px solid #eee;
+}
+
+.jb .project-card:hover {
+    transform: none;
+}
+
+.jb .project-link { font-weight: 600; }
+
+/* Contact */
+.jb .contact-content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.jb .contact-item { margin-bottom: 0.5rem; }
+
+/* Section spacing */
+.jb.section { padding: 1.25rem 0; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .jb .hero { grid-template-columns: 1fr; }
+}
+
