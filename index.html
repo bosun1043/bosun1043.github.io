@@ -21,39 +21,42 @@
                 <h1>Jessica Kang</h1>
             </div>
             <ul class="nav-menu">
-                <li><a href="#home" class="nav-link active" onclick="showSection('home')">Home</a></li>
-                <li><a href="#about" class="nav-link" onclick="showSection('about')">About</a></li>
-                <li><a href="#projects" class="nav-link" onclick="showSection('projects')">Projects</a></li>
-                <li><a href="#for-jun" class="nav-link" onclick="showSection('for-jun')">For Jun</a></li>
-                <li><a href="#contact" class="nav-link" onclick="showSection('contact')">Contact</a></li>
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#publications" class="nav-link">Publications</a></li>
+                <!-- <li><a href="#projects" class="nav-link">Projects</a></li> -->
+                <li><a href="#for-jun" class="nav-link">For Jun</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Home Section (Jon Barron style scoped with .jb) -->
+    <!-- Home Section -->
     <section id="home" class="section active jb">
         <div class="hero">
             <div class="hero-content">
                 <h1>Bosun (Jessica) Kang</h1>
-                <p class="hero-subtitle">Undergraduate Researcher</p>
+                <p class="hero-subtitle">
+                    I am an undergraduate student at Seoul National University, double majoring in Computer Science and Economics. 
+                    Currently, I’m an undergraduate researcher at the Algorithmic Foundations of Data Science Lab (AFD Lab), advised by Professor Chenglin Fan. 
+                    My research focuses on algorithmic theory, combining data-driven approaches with Bayesian methods. 
+                    Please feel free to contact me at: bosun1043 {at} snu {dot} ac {dot} kr.
+                </p>
             </div>
             <div class="hero-image">
                 <div class="profile-card">
-                    <div class="profile-img"><img src="pic/photo_829588.JPG" alt="강보선 프로필 사진"></div>
-                    <h3>Bosun (Jessica) Kang </h3>
-
+                    <div class="profile-img"><img src="pic/pic2.jpeg" alt="강보선 프로필 사진"></div>
+                    <h3>Bosun (Jessica) Kang</h3>
                 </div>
             </div>
         </div>
-        
+
         <!-- CV Section -->
         <div class="cv-section">
             <div class="cv-content">
                 <div class="cv-item">
                     <h3>Education</h3>
-                    <p>Seoul National University, Majoring Computer Science Engineering and Economics (2020–2025)</p>
+                    <p>Seoul National University, Majoring in Computer Science Engineering and Economics (2020–2025)</p>
                 </div>
-        
             </div>
         </div>
 
@@ -62,249 +65,256 @@
             <h2>News</h2>
             <div class="news-content">
                 <div class="news-item">
+                    <span class="news-date">2024.11.08</span>
+                    <span class="news-text">Excited to share that my first paper, “Learning-Augmented Ski Rental with Discrete Distribution: A Bayesian Approach,” has been accepted to AAAI 2026!</span>
+                </div>
+                <div class="news-item">
                     <span class="news-date">2024.09.13</span>
-                    <span class="news-text">I joinded AFD Lab as a undergraduate researche and my paper is on phase 2 for AAAI-2026</span>
+                    <span class="news-text">I joined AFD Lab as an undergraduate researcher, continuing my research under Professor Chenglin Fan.</span>
                 </div>
                 <div class="news-item">
                     <span class="news-date">2024.06.01</span>
-                    <span class="news-text">Just finished my internship at Ministry of economy and finance</span>
+                    <span class="news-text">Completed my internship at the Ministry of Economy and Finance.</span>
                 </div>
                 <div class="news-item">
                     <span class="news-date">2024.03.08</span>
-                    <span class="news-text">Completed my internship at Naver Cloud as a AI Solution Team 1</span>
+                    <span class="news-text">Completed my internship at Naver Cloud, AI Solutions Team 1.</span>
                 </div>
             </div>
         </div>
-
-        <!-- Bio Section -->
+        <!-- Bio Section (주석 처리 유지)
         <div class="bio-section">
             <h2>Bio</h2>
             <div class="bio-content">
                 <p>I am an undergraduate student at Seoul National University, where I study Computer Science Engineering and Economics. 
-
-                    Currently, I’m an undergraduate researcher at Algorithmic Foundations of Data Science Lab (AFD Lab), SNU where I focus on Algorithm Theory problems. 
-                    
-                    please feel free to contact me at: bosun1043 {at} snu {dot} ac {dot} kr</p>
+                Currently, I’m an undergraduate researcher at Algorithmic Foundations of Data Science Lab (AFD Lab), SNU where I focus on Algorithm Theory problems. 
+                please feel free to contact me at: bosun1043 {at} snu {dot} ac {dot} kr</p>
             </div>
         </div>
+        -->
     </section>
 
     <!-- About Section -->
     <section id="about" class="section">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p> i do things for fun </p></p>
-                    <div class="skills">
-
-                </div>
-            </div>
+      <div class="container">
+        <h2>About Me</h2>
+        <div class="about-content">
+          <div class="about-text">
+            <p>I do things for fun.</p>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section">
-        <div class="container">
-            <h2>Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3>퀀트 트레이딩 시스템</h3>
-                    <p>다양한 퀀트 전략을 구현하고 백테스팅을 수행하는 시스템</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">C++</span>
-                        <span class="tech-tag">Algorithm</span>
-                    </div>
-                    <a href="#for-jun" class="project-link">자세히 보기</a>
-                </div>
-                <div class="project-card">
-                    <h3>포트폴리오 최적화</h3>
-                    <p>리스크와 수익률을 고려한 포트폴리오 구성 알고리즘</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">C++</span>
-                        <span class="tech-tag">Optimization</span>
-                    </div>
-                </div>
-            </div>
+    <!-- Publications Section -->
+    <section id="publications" class="section">
+      <div class="container">
+        <h2>Publications</h2>
+        <div class="pub-item">
+          <div class="pub-title">
+            [C1] Learning-Augmented Ski Rental with Discrete Distribution: A Bayesian Approach
+          </div>
+          <div class="pub-authors">
+            Bosun Kang, HyeJun Park, Chenglin Fan
+          </div>
+          <div class="pub-venue">
+            AAAI 2026 (Poster)
+          </div>
+          <div class="pub-links">
+            <a href="https://openreview.net/forum?id=jNTdGA3Hly" target="_blank" rel="noopener">Paper</a>
+            <span class="sep">|</span>
+            <a href="#">Slides</a>
+            <span class="sep">|</span>
+            <a href="#">Poster</a>
+            <span class="sep">|</span>
+            <a href="#">arXiv</a>
+            <span class="sep">|</span>
+            <a href="#">BibTeX</a>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- For Jun Section (기존 퀀트 트레이딩 시스템) -->
+    <!-- For Jun Section -->
     <section id="for-jun" class="section">
-        <div class="container">
-            <h2>For Jun - 퀀트 트레이딩 시스템</h2>
-            <p class="section-description">다양한 퀀트 전략을 선택하고 백테스팅을 수행할 수 있는 시스템입니다.</p>
-            
-            <!-- Step 1: Welcome Page -->
-            <div id="welcome" class="step active">
-                <h3>퀀트 트레이딩 시스템</h3>
-                <p>안녕하세요. 제가 재미로 만든 퀀트 트레이딩 시스템입니다. 여기서는 다양한 퀀트 전략을 선택해서 각 전략의 차이점과, 주식 시뮬레이션을 할 수 있습니다.</p>
-                <div class="button-group">
-                    <button id="start-button" onclick="startQuant()">시작하기</button>
-                </div>
-            </div>
+      <div class="container">
+        <h2>For Jun 1</h2>
+        <p class="section-description">다양한 퀀트 전략을 선택하고 백테스팅을 수행할 수 있는 시스템입니다.</p>
 
-    <!-- Step 2: Stock Selection -->
-            <div id="stock-selection" class="step">
-        <h2>Step 1: 관심 있는 종목을 선택해주세요</h2>
-        <div class="stock-list">
-            <!-- 동적으로 생성될 종목 목록 -->
+        <!-- Step 1 -->
+        <div id="welcome" class="step active">
+          <h3>퀀트 트레이딩 시스템</h3>
+          <p>안녕하세요. 제가 재미로 만든 퀀트 트레이딩 시스템입니다. 여기서는 다양한 퀀트 전략을 선택해서 각 전략의 차이점과 주식 시뮬레이션을 할 수 있습니다.</p>
+          <div class="button-group">
+            <button id="start-button" onclick="startQuant()">시작하기</button>
+          </div>
         </div>
-        <div class="button-group">
-            <button id="back-to-welcome" class="back-button" onclick="goToWelcome()">이전</button>
-            <button id="to-strategy-button" onclick="goToStrategy()">다음</button>
-        </div>
-    </section>
 
-    <!-- Step 3: Strategy Selection -->
-            <div id="strategy-selection" class="step">
-        <h2>Step 2: 원하는 퀀트 전략을 선택해주세요</h2>
-        <div class="selected-stocks">
+        <!-- Step 2 -->
+        <div id="stock-selection" class="step">
+          <h2>Step 1: 관심 있는 종목을 선택해주세요</h2>
+          <div class="stock-list"></div>
+          <div class="button-group">
+            <button class="back-button" onclick="goToWelcome()">이전</button>
+            <button onclick="goToStrategy()">다음</button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div id="strategy-selection" class="step">
+          <h2>Step 2: 원하는 퀀트 전략을 선택해주세요</h2>
+          <div class="selected-stocks">
             <h3>선택된 종목</h3>
             <div id="selected-stocks-list"></div>
-        </div>
-        <div class="strategy-cards">
+          </div>
+          <div class="strategy-cards">
             <div class="strategy-card" data-strategy="value">
-                <h3>밸류 전략</h3>
-                <p>PER, PBR 기반 저평가 종목 선정</p>
+              <h3>밸류 전략</h3>
+              <p>PER, PBR 기반 저평가 종목 선정</p>
             </div>
             <div class="strategy-card" data-strategy="quality">
-                <h3>퀄리티 전략</h3>
-                <p>ROE, 영업이익률 기반 우량 기업 선정</p>
+              <h3>퀄리티 전략</h3>
+              <p>ROE, 영업이익률 기반 우량 기업 선정</p>
             </div>
             <div class="strategy-card" data-strategy="momentum">
-                <h3>모멘텀 전략</h3>
-                <p>가격 추세 기반 단기 수익 추구</p>
+              <h3>모멘텀 전략</h3>
+              <p>가격 추세 기반 단기 수익 추구</p>
             </div>
             <div class="strategy-card" data-strategy="hybrid">
-                <h3>하이브리드 전략</h3>
-                <p>세 전략의 조합으로 균형잡힌 접근</p>
+              <h3>하이브리드 전략</h3>
+              <p>세 전략의 조합으로 균형잡힌 접근</p>
             </div>
+          </div>
+          <div class="button-group">
+            <button class="back-button" onclick="goToStocks()">이전</button>
+            <button id="to-parameter-button">다음</button>
+          </div>
         </div>
-        <div class="button-group">
-            <button id="back-to-stocks" class="back-button" onclick="goToStocks()">이전</button>
-            <button id="to-parameter-button" onclick="goToParameter()">다음</button>
-        </div>
-    </section>
 
-    <!-- Step 4: Parameter Setting -->
-            <div id="parameter-setting" class="step">
-        <h2>Step 3: 전략 파라미터를 조정해주세요</h2>
-        <div class="parameter-controls">
+        <!-- Step 4 -->
+        <div id="parameter-setting" class="step">
+          <h2>Step 3: 전략 파라미터를 조정해주세요</h2>
+          <div class="parameter-controls">
             <div class="parameter-group">
-                <h3>가중치 설정</h3>
-                <div class="slider-group">
-                    <label>ROE 가중치</label>
-                    <input type="range" id="roe-weight" min="0" max="100" value="50">
-                </div>
-                <div class="slider-group">
-                    <label>영업이익률 가중치</label>
-                    <input type="range" id="margin-weight" min="0" max="100" value="50">
-                </div>
+              <h3>가중치 설정</h3>
+              <div class="slider-group">
+                <label>ROE 가중치</label>
+                <input type="range" id="roe-weight" min="0" max="100" value="50">
+              </div>
+              <div class="slider-group">
+                <label>영업이익률 가중치</label>
+                <input type="range" id="margin-weight" min="0" max="100" value="50">
+              </div>
             </div>
             <div class="parameter-group">
-                <h3>투자 기간</h3>
-                <select id="investment-period">
-                    <option value="1">1개월</option>
-                    <option value="3">3개월</option>
-                    <option value="6">6개월</option>
-                    <option value="12" selected>1년</option>
-                    <option value="24">2년</option>
-                </select>
+              <h3>투자 기간</h3>
+              <select id="investment-period">
+                <option value="1">1개월</option>
+                <option value="3">3개월</option>
+                <option value="6">6개월</option>
+                <option value="12" selected>1년</option>
+                <option value="24">2년</option>
+              </select>
             </div>
             <div class="parameter-group">
-                <h3>리밸런싱 주기</h3>
-                <select id="rebalancing-period">
-                    <option value="1">매일</option>
-                    <option value="7">매주</option>
-                    <option value="30" selected>매월</option>
-                    <option value="90">분기별</option>
-                </select>
+              <h3>리밸런싱 주기</h3>
+              <select id="rebalancing-period">
+                <option value="1">매일</option>
+                <option value="7">매주</option>
+                <option value="30" selected>매월</option>
+                <option value="90">분기별</option>
+              </select>
             </div>
+          </div>
+          <div class="button-group">
+            <button class="back-button" onclick="goToStrategy()">이전</button>
+            <button onclick="runStrategy()">전략 실행</button>
+          </div>
         </div>
-        <div class="button-group">
-            <button id="back-to-strategy" class="back-button" onclick="goToStrategy()">이전</button>
-            <button id="run-strategy-button" onclick="runStrategy()">전략 실행</button>
-        </div>
-    </section>
 
-    <!-- Step 5: Results -->
-            <div id="results" class="step">
-        <h2>퀀트 전략 분석 결과</h2>
-        <div class="results-container">
+        <!-- Step 5 -->
+        <div id="results" class="step">
+          <h2>퀀트 전략 분석 결과</h2>
+          <div class="results-container">
             <div class="performance-metrics">
-                <div class="metric">
-                    <h3>예상 수익률</h3>
-                    <p id="expected-return">-</p>
-                </div>
-                <div class="metric">
-                    <h3>예상 변동성</h3>
-                    <p id="volatility">-</p>
-                </div>
-                <div class="metric">
-                    <h3>샤프 비율</h3>
-                    <p id="sharpe-ratio">-</p>
-                </div>
+              <div class="metric">
+                <h3>예상 수익률</h3>
+                <p id="expected-return">-</p>
+              </div>
+              <div class="metric">
+                <h3>예상 변동성</h3>
+                <p id="volatility">-</p>
+              </div>
+              <div class="metric">
+                <h3>샤프 비율</h3>
+                <p id="sharpe-ratio">-</p>
+              </div>
             </div>
             <div class="chart-container">
-                <canvas id="performance-chart"></canvas>
+              <canvas id="performance-chart"></canvas>
             </div>
-            <div class="stock-analysis">
-                <!-- 동적으로 생성될 종목별 분석 -->
-            </div>
+          </div>
+          <div class="button-group">
+            <button class="back-button" onclick="goToParameter()">이전</button>
+            <button onclick="restart()">다시 시작하기</button>
+          </div>
         </div>
-        <div class="button-group">
-            <button id="back-to-parameter" class="back-button" onclick="goToParameter()">이전</button>
-            <button id="restart-button" onclick="restart()">다시 시작하기</button>
+
+        <!--  For Fun 퀴즈 섹션 -->
+        <div id="for-fun" class="section-inset">
+          <h2>For Fun 2</h2>
+
+          <div class="quiz-card">
+            <h3>Quiz 1. 베스킨라빈스 31 게임 (선공 필승전략?)</h3>
+            <p>1부터 31까지 번갈아 1~3개 숫자를 연속으로 말합니다. 31을 말하는 사람이 집니다. 선공이 이기는 전략이 있을까요?</p>
+            <!-- <button class="btn btn-secondary" data-toggle="solution" data-target="#q1-solution">해설 보기</button>
+            <div id="q1-solution" class="solution hidden">
+              <p><strong>핵심:</strong> 상대에게 <code>4, 8, 12, 16, 20, 24, 28</code>을 부르게 유도하면 이깁니다.
+              즉, 본인이 <code>3, 7, 11, 15, 19, 23, 27</code>에서 턴을 끝내도록 조절하세요.</p> -->
             </div>
+          </div>
+
+          <div class="quiz-card">
+            <h3>Quiz 2. 자릿수 합 퀴즈</h3>
+            <p>1,000,000 미만의 양의 정수 중, 각 자릿수의 합이 19인 수는 몇 개일까요?</p>
+            <div class="quiz-row">
+              <input id="q2-input" type="number" placeholder="정답 입력" />
+              <!-- <button class="btn btn-primary" id="q2-check">정답 확인</button> -->
+            </div>
+            <div id="q2-feedback" class="quiz-feedback"></div>
+            <!-- <button class="btn btn-secondary" data-toggle="solution" data-target="#q2-solution">해설 보기</button>
+            <div id="q2-solution" class="solution hidden">
+              <p>6자리(앞자리에 0 허용)로 보면 <code>x₁+…+x₆ = 19</code>, 각 자리 <code>0≤xᵢ≤9</code>.
+              전체는 <code>C(24,5)</code>, 한 자리 ≥10인 경우 포함배제로 <code>6·C(14,5)</code> 빼면
+              <code>C(24,5) - 6·C(14,5) = 30,492</code>개.</p> -->
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="section">
-        <div class="container">
-            <h2>Contact</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>연락처</h3>
-                    <div class="contact-item">
-                        <span class="contact-label">Email:</span>
-                        <span class="contact-value">bosun1043@gmail.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">GitHub:</span>
-                        <span class="contact-value">github.com/bosun1043</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Location:</span>
-                        <span class="contact-value">Seoul, South Korea</span>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <h3>메시지 보내기</h3>
-                    <form>
-                        <div class="form-group">
-                            <input type="text" placeholder="이름" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="이메일" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea placeholder="메시지" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">메시지 전송</button>
-                    </form>
-                </div>
-            </div>
+      <div class="container">
+        <h2>Contact</h2>
+        <div class="contact-content">
+          <div class="contact-info">
+            <!-- <h3>연락처</h3> -->
+            <div class="contact-item"><span class="contact-label">Email:</span><span class="contact-value">bosun1043@snu.ac.kr, bosun1043@gmail.com</span></div>
+            <div class="contact-item"><span class="contact-label">GitHub:</span><span class="contact-value">github.com/bosun1043</span></div>
+            <div class="contact-item"><span class="contact-label">Location:</span><span class="contact-value">Seoul, South Korea</span></div>
+            <div class="contact-item"><span class="contact-label">Linkedin:</span><span class="contact-value">bosun-jessica-kang-a692331bb/ </span></div>
+          </div>
         </div>
+      </div>
     </section>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2024 강보선. All rights reserved.</p>
-        </div>
+      <div class="container">
+        <p>&copy; 2024 강보선. All rights reserved.</p>
+      </div>
     </footer>
 
     <script src="js/main.js"></script>
 </body>
-</html> 
+</html>

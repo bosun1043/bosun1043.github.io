@@ -272,12 +272,39 @@ body {
     text-align: center;
 }
 
+/* Make profile image larger and ensure parent doesn't constrain it */
+.hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Bigger, circular profile container (desktop) */
 .profile-img {
-    width: 200px;
-    height: 200px;
+    width: 300px !important;
+    height: 300px !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
     background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-    border-radius: 50%;
     margin: 0 auto 1rem;
+    display: block;
+}
+
+/* Ensure inner img fills container */
+.profile-img img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block;
+    max-width: none !important;
+}
+
+/* Responsive sizes */
+@media (max-width: 1024px) {
+    .profile-img { width: 280px !important; height: 280px !important; }
+}
+@media (max-width: 600px) {
+    .profile-img { width: 140px !important; height: 140px !important; }
 }
 
 .profile-card h3 {
@@ -472,6 +499,25 @@ footer .container {
     margin-bottom: 2rem;
     font-size: 1.1rem;
 }
+
+/* For Fun Quiz */
+.section-inset { margin-top: 2rem; }
+.quiz-card {
+  background: #fff;
+  padding: 1.25rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: 1rem;
+}
+.quiz-card h3 { margin-bottom: .5rem; color: var(--primary-color); }
+.quiz-row { display: flex; gap: .5rem; margin: .75rem 0; }
+.quiz-row input[type="number"] {
+  padding: .6rem .8rem; border: 1px solid #ddd; border-radius: var(--border-radius); flex: 1;
+}
+.solution.hidden { display: none; }
+.quiz-feedback { margin-top: .5rem; font-weight: 600; }
+.quiz-feedback.ok { color: #2ecc71; }
+.quiz-feedback.no { color: var(--accent-color); }
 
 /* 기존 퀀트 시스템 스타일 유지 */
 .step {
