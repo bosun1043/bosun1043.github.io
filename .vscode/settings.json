@@ -83,5 +83,6 @@
         "random": "cpp",
         "ranges": "cpp",
         "algorithm": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/Users/jessicakang/Desktop/25-2/bosun1043.github.io/quant"
 }
