@@ -161,163 +161,164 @@
 </section>
 
 
-    <!-- For Fun Section -->
-    <section id="for-jun" class="section">
-      <div class="container">
-        <h2>For Fun 1</h2>
-        <p class="section-description">다양한 퀀트 전략을 선택하고 백테스팅을 수행할 수 있는 시스템입니다.</p>
+      <!-- For Fun Section -->
+  <section id="for-jun" class="section">
+    <div class="container">
+      <h2>For Fun 1</h2>
+      <p class="section-description">
+        ⚠️ This section is a work in progress — some functions may not work perfectly yet.
+        <br>
+        This is an interactive quant trading simulator that allows users to choose different quantitative strategies and perform backtesting.
+      </p>
 
-        <!-- Step 1 -->
-        <div id="welcome" class="step active">
-          <h3>퀀트 트레이딩 시스템</h3>
-          <p>안녕하세요. 제가 재미로 만든 퀀트 트레이딩 시스템입니다. 여기서는 다양한 퀀트 전략을 선택해서 각 전략의 차이점과 주식 시뮬레이션을 할 수 있습니다.</p>
-          <div class="button-group">
-            <button id="start-button" onclick="startQuant()">시작하기</button>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div id="stock-selection" class="step">
-          <h2>Step 1: 관심 있는 종목을 선택해주세요</h2>
-          <div class="stock-list"></div>
-          <div class="button-group">
-            <button class="back-button" onclick="goToWelcome()">이전</button>
-            <button onclick="goToStrategy()">다음</button>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div id="strategy-selection" class="step">
-          <h2>Step 2: 원하는 퀀트 전략을 선택해주세요</h2>
-          <div class="selected-stocks">
-            <h3>선택된 종목</h3>
-            <div id="selected-stocks-list"></div>
-          </div>
-          <div class="strategy-cards">
-            <div class="strategy-card" data-strategy="value">
-              <h3>밸류 전략</h3>
-              <p>PER, PBR 기반 저평가 종목 선정</p>
-            </div>
-            <div class="strategy-card" data-strategy="quality">
-              <h3>퀄리티 전략</h3>
-              <p>ROE, 영업이익률 기반 우량 기업 선정</p>
-            </div>
-            <div class="strategy-card" data-strategy="momentum">
-              <h3>모멘텀 전략</h3>
-              <p>가격 추세 기반 단기 수익 추구</p>
-            </div>
-            <div class="strategy-card" data-strategy="hybrid">
-              <h3>하이브리드 전략</h3>
-              <p>세 전략의 조합으로 균형잡힌 접근</p>
-            </div>
-          </div>
-          <div class="button-group">
-            <button class="back-button" onclick="goToStocks()">이전</button>
-            <button id="to-parameter-button">다음</button>
-          </div>
-        </div>
-
-        <!-- Step 4 -->
-        <div id="parameter-setting" class="step">
-          <h2>Step 3: 전략 파라미터를 조정해주세요</h2>
-          <div class="parameter-controls">
-            <div class="parameter-group">
-              <h3>가중치 설정</h3>
-              <div class="slider-group">
-                <label>ROE 가중치</label>
-                <input type="range" id="roe-weight" min="0" max="100" value="50">
-              </div>
-              <div class="slider-group">
-                <label>영업이익률 가중치</label>
-                <input type="range" id="margin-weight" min="0" max="100" value="50">
-              </div>
-            </div>
-            <div class="parameter-group">
-              <h3>투자 기간</h3>
-              <select id="investment-period">
-                <option value="1">1개월</option>
-                <option value="3">3개월</option>
-                <option value="6">6개월</option>
-                <option value="12" selected>1년</option>
-                <option value="24">2년</option>
-              </select>
-            </div>
-            <div class="parameter-group">
-              <h3>리밸런싱 주기</h3>
-              <select id="rebalancing-period">
-                <option value="1">매일</option>
-                <option value="7">매주</option>
-                <option value="30" selected>매월</option>
-                <option value="90">분기별</option>
-              </select>
-            </div>
-          </div>
-          <div class="button-group">
-            <button class="back-button" onclick="goToStrategy()">이전</button>
-            <button onclick="runStrategy()">전략 실행</button>
-          </div>
-        </div>
-
-        <!-- Step 5 -->
-        <div id="results" class="step">
-          <h2>퀀트 전략 분석 결과</h2>
-          <div class="results-container">
-            <div class="performance-metrics">
-              <div class="metric">
-                <h3>예상 수익률</h3>
-                <p id="expected-return">-</p>
-              </div>
-              <div class="metric">
-                <h3>예상 변동성</h3>
-                <p id="volatility">-</p>
-              </div>
-              <div class="metric">
-                <h3>샤프 비율</h3>
-                <p id="sharpe-ratio">-</p>
-              </div>
-            </div>
-            <div class="chart-container">
-              <canvas id="performance-chart"></canvas>
-            </div>
-          </div>
-          <div class="button-group">
-            <button class="back-button" onclick="goToParameter()">이전</button>
-            <button onclick="restart()">다시 시작하기</button>
-          </div>
-        </div>
-
-        <!--  For Fun 퀴즈 섹션 -->
-        <div id="for-fun" class="section-inset">
-          <h2>For Fun 2</h2>
-
-          <div class="quiz-card">
-            <h3>Quiz 1. 베스킨라빈스 31 게임 (선공 필승전략?)</h3>
-            <p>1부터 31까지 번갈아 1~3개 숫자를 연속으로 말합니다. 31을 말하는 사람이 집니다. 선공이 이기는 전략이 있을까요?</p>
-            <!-- <button class="btn btn-secondary" data-toggle="solution" data-target="#q1-solution">해설 보기</button>
-            <div id="q1-solution" class="solution hidden">
-              <p><strong>핵심:</strong> 상대에게 <code>4, 8, 12, 16, 20, 24, 28</code>을 부르게 유도하면 이깁니다.
-              즉, 본인이 <code>3, 7, 11, 15, 19, 23, 27</code>에서 턴을 끝내도록 조절하세요.</p> -->
-            </div>
-          </div>
-
-          <div class="quiz-card">
-            <h3>Quiz 2. 자릿수 합 퀴즈</h3>
-            <p>1,000,000 미만의 양의 정수 중, 각 자릿수의 합이 19인 수는 몇 개일까요?</p>
-            <div class="quiz-row">
-              <input id="q2-input" type="number" placeholder="정답 입력" />
-              <!-- <button class="btn btn-primary" id="q2-check">정답 확인</button> -->
-            </div>
-            <div id="q2-feedback" class="quiz-feedback"></div>
-            <!-- <button class="btn btn-secondary" data-toggle="solution" data-target="#q2-solution">해설 보기</button>
-            <div id="q2-solution" class="solution hidden">
-              <p>6자리(앞자리에 0 허용)로 보면 <code>x₁+…+x₆ = 19</code>, 각 자리 <code>0≤xᵢ≤9</code>.
-              전체는 <code>C(24,5)</code>, 한 자리 ≥10인 경우 포함배제로 <code>6·C(14,5)</code> 빼면
-              <code>C(24,5) - 6·C(14,5) = 30,492</code>개.</p> -->
-            </div>
-          </div>
+      <!-- Step 1 -->
+      <div id="welcome" class="step active">
+        <h3>Quant Trading System</h3>
+        <p>
+          Welcome! This is a fun quant trading system I built for experimentation.
+          You can explore different quantitative investment strategies, compare their performance, and simulate trading outcomes.
+        </p>
+        <div class="button-group">
+          <button id="start-button" onclick="startQuant()">Start</button>
         </div>
       </div>
-    </section>
+
+      <!-- Step 2 -->
+      <div id="stock-selection" class="step">
+        <h2>Step 1: Select the stocks you’re interested in</h2>
+        <div class="stock-list"></div>
+        <div class="button-group">
+          <button class="back-button" onclick="goToWelcome()">Back</button>
+          <button onclick="goToStrategy()">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div id="strategy-selection" class="step">
+        <h2>Step 2: Choose your quant strategy</h2>
+        <div class="selected-stocks">
+          <h3>Selected Stocks</h3>
+          <div id="selected-stocks-list"></div>
+        </div>
+        <div class="strategy-cards">
+          <div class="strategy-card" data-strategy="value">
+            <h3>Value Strategy</h3>
+            <p>Selects undervalued stocks based on PER and PBR metrics.</p>
+          </div>
+          <div class="strategy-card" data-strategy="quality">
+            <h3>Quality Strategy</h3>
+            <p>Focuses on high-quality firms with strong ROE and operating margins.</p>
+          </div>
+          <div class="strategy-card" data-strategy="momentum">
+            <h3>Momentum Strategy</h3>
+            <p>Pursues short-term returns based on price trends.</p>
+          </div>
+          <div class="strategy-card" data-strategy="hybrid">
+            <h3>Hybrid Strategy</h3>
+            <p>Combines the three approaches for a balanced portfolio.</p>
+          </div>
+        </div>
+        <div class="button-group">
+          <button class="back-button" onclick="goToStocks()">Back</button>
+          <button id="to-parameter-button">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div id="parameter-setting" class="step">
+        <h2>Step 3: Adjust strategy parameters</h2>
+        <div class="parameter-controls">
+          <div class="parameter-group">
+            <h3>Weight Settings</h3>
+            <div class="slider-group">
+              <label>ROE Weight</label>
+              <input type="range" id="roe-weight" min="0" max="100" value="50">
+            </div>
+            <div class="slider-group">
+              <label>Operating Margin Weight</label>
+              <input type="range" id="margin-weight" min="0" max="100" value="50">
+            </div>
+          </div>
+          <div class="parameter-group">
+            <h3>Investment Horizon</h3>
+            <select id="investment-period">
+              <option value="1">1 Month</option>
+              <option value="3">3 Months</option>
+              <option value="6">6 Months</option>
+              <option value="12" selected>1 Year</option>
+              <option value="24">2 Years</option>
+            </select>
+          </div>
+          <div class="parameter-group">
+            <h3>Rebalancing Frequency</h3>
+            <select id="rebalancing-period">
+              <option value="1">Daily</option>
+              <option value="7">Weekly</option>
+              <option value="30" selected>Monthly</option>
+              <option value="90">Quarterly</option>
+            </select>
+          </div>
+        </div>
+        <div class="button-group">
+          <button class="back-button" onclick="goToStrategy()">Back</button>
+          <button onclick="runStrategy()">Run Strategy</button>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div id="results" class="step">
+        <h2>Quant Strategy Results</h2>
+        <div class="results-container">
+          <div class="performance-metrics">
+            <div class="metric">
+              <h3>Expected Return</h3>
+              <p id="expected-return">-</p>
+            </div>
+            <div class="metric">
+              <h3>Expected Volatility</h3>
+              <p id="volatility">-</p>
+            </div>
+            <div class="metric">
+              <h3>Sharpe Ratio</h3>
+              <p id="sharpe-ratio">-</p>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="performance-chart"></canvas>
+          </div>
+        </div>
+        <div class="button-group">
+          <button class="back-button" onclick="goToParameter()">Back</button>
+          <button onclick="restart()">Restart</button>
+        </div>
+      </div>
+
+      <!-- For Fun Quiz Section -->
+      <div id="for-fun" class="section-inset">
+        <h2>For Fun 2</h2>
+
+        <div class="quiz-card">
+          <h3>Quiz 1. Baskin Robbins 31 Game (First-player Winning Strategy?)</h3>
+          <p>
+            Players take turns saying 1–3 consecutive numbers starting from 1. Whoever says 31 loses.
+            Is there a guaranteed winning strategy for the first player?
+          </p>
+        </div>
+
+        <div class="quiz-card">
+          <h3>Quiz 2. Digit Sum Puzzle</h3>
+          <p>
+            Among all positive integers less than 1,000,000, how many have digits summing to 19?
+          </p>
+          <div class="quiz-row">
+            <input id="q2-input" type="number" placeholder="Enter your answer" />
+          </div>
+          <div id="q2-feedback" class="quiz-feedback"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
     <!-- Contact Section -->
     <section id="contact" class="section">
