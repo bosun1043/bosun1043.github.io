@@ -519,6 +519,11 @@ footer .container {
 .quiz-feedback.ok { color: #2ecc71; }
 .quiz-feedback.no { color: var(--accent-color); }
 
+.fun-tab {
+  color: #000 !important;
+}
+
+
 /* 기존 퀀트 시스템 스타일 유지 */
 .step {
     display: none;
