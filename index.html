@@ -161,164 +161,244 @@
 </section>
 
 
-      <!-- For Fun Section -->
-  <section id="for-jun" class="section">
-    <div class="container">
-      <h2>For Fun 1</h2>
-      <p class="section-description">
-        ⚠️ This section is a work in progress — some functions may not work perfectly yet.
-        <br>
-        This is an interactive quant trading simulator that allows users to choose different quantitative strategies and perform backtesting.
-      </p>
+    <!-- For Fun Section -->
+    <section id="for-jun" class="section">
+      <div class="container">
+        <h2>For Fun</h2>
 
-      <!-- Step 1 -->
-      <div id="welcome" class="step active">
-        <h3>Quant Trading System</h3>
-        <p>
-          Welcome! This is a fun quant trading system I built for experimentation.
-          You can explore different quantitative investment strategies, compare their performance, and simulate trading outcomes.
-        </p>
-        <div class="button-group">
-          <button id="start-button" onclick="startQuant()">Start</button>
+        <!-- Top Switch Buttons -->
+        <div class="fun-switch" role="tablist" aria-label="For Fun Switch">
+          <button class="fun-tab active" role="tab" aria-selected="true" aria-controls="quant-panel" onclick="showPanel('quant')">
+            Quant Trading
+          </button>
+          <button class="fun-tab" role="tab" aria-selected="false" aria-controls="music-panel" onclick="showPanel('music')">
+            Music Picks
+          </button>
         </div>
-      </div>
 
-      <!-- Step 2 -->
-      <div id="stock-selection" class="step">
-        <h2>Step 1: Select the stocks you’re interested in</h2>
-        <div class="stock-list"></div>
-        <div class="button-group">
-          <button class="back-button" onclick="goToWelcome()">Back</button>
-          <button onclick="goToStrategy()">Next</button>
-        </div>
-      </div>
-
-      <!-- Step 3 -->
-      <div id="strategy-selection" class="step">
-        <h2>Step 2: Choose your quant strategy</h2>
-        <div class="selected-stocks">
-          <h3>Selected Stocks</h3>
-          <div id="selected-stocks-list"></div>
-        </div>
-        <div class="strategy-cards">
-          <div class="strategy-card" data-strategy="value">
-            <h3>Value Strategy</h3>
-            <p>Selects undervalued stocks based on PER and PBR metrics.</p>
-          </div>
-          <div class="strategy-card" data-strategy="quality">
-            <h3>Quality Strategy</h3>
-            <p>Focuses on high-quality firms with strong ROE and operating margins.</p>
-          </div>
-          <div class="strategy-card" data-strategy="momentum">
-            <h3>Momentum Strategy</h3>
-            <p>Pursues short-term returns based on price trends.</p>
-          </div>
-          <div class="strategy-card" data-strategy="hybrid">
-            <h3>Hybrid Strategy</h3>
-            <p>Combines the three approaches for a balanced portfolio.</p>
-          </div>
-        </div>
-        <div class="button-group">
-          <button class="back-button" onclick="goToStocks()">Back</button>
-          <button id="to-parameter-button">Next</button>
-        </div>
-      </div>
-
-      <!-- Step 4 -->
-      <div id="parameter-setting" class="step">
-        <h2>Step 3: Adjust strategy parameters</h2>
-        <div class="parameter-controls">
-          <div class="parameter-group">
-            <h3>Weight Settings</h3>
-            <div class="slider-group">
-              <label>ROE Weight</label>
-              <input type="range" id="roe-weight" min="0" max="100" value="50">
-            </div>
-            <div class="slider-group">
-              <label>Operating Margin Weight</label>
-              <input type="range" id="margin-weight" min="0" max="100" value="50">
-            </div>
-          </div>
-          <div class="parameter-group">
-            <h3>Investment Horizon</h3>
-            <select id="investment-period">
-              <option value="1">1 Month</option>
-              <option value="3">3 Months</option>
-              <option value="6">6 Months</option>
-              <option value="12" selected>1 Year</option>
-              <option value="24">2 Years</option>
-            </select>
-          </div>
-          <div class="parameter-group">
-            <h3>Rebalancing Frequency</h3>
-            <select id="rebalancing-period">
-              <option value="1">Daily</option>
-              <option value="7">Weekly</option>
-              <option value="30" selected>Monthly</option>
-              <option value="90">Quarterly</option>
-            </select>
-          </div>
-        </div>
-        <div class="button-group">
-          <button class="back-button" onclick="goToStrategy()">Back</button>
-          <button onclick="runStrategy()">Run Strategy</button>
-        </div>
-      </div>
-
-      <!-- Step 5 -->
-      <div id="results" class="step">
-        <h2>Quant Strategy Results</h2>
-        <div class="results-container">
-          <div class="performance-metrics">
-            <div class="metric">
-              <h3>Expected Return</h3>
-              <p id="expected-return">-</p>
-            </div>
-            <div class="metric">
-              <h3>Expected Volatility</h3>
-              <p id="volatility">-</p>
-            </div>
-            <div class="metric">
-              <h3>Sharpe Ratio</h3>
-              <p id="sharpe-ratio">-</p>
-            </div>
-          </div>
-          <div class="chart-container">
-            <canvas id="performance-chart"></canvas>
-          </div>
-        </div>
-        <div class="button-group">
-          <button class="back-button" onclick="goToParameter()">Back</button>
-          <button onclick="restart()">Restart</button>
-        </div>
-      </div>
-
-      <!-- For Fun Quiz Section -->
-      <div id="for-fun" class="section-inset">
-        <h2>For Fun 2</h2>
-
-        <div class="quiz-card">
-          <h3>Quiz 1. Baskin Robbins 31 Game (First-player Winning Strategy?)</h3>
-          <p>
-            Players take turns saying 1–3 consecutive numbers starting from 1. Whoever says 31 loses.
-            Is there a guaranteed winning strategy for the first player?
+        <!-- Quant Panel -->
+        <div id="quant-panel" class="fun-panel active" role="tabpanel">
+          <p class="section-description">
+            ⚠️ This section is a work in progress — some functions may not work perfectly yet.
+            <br>
+            This is an interactive quant trading simulator that allows users to choose different quantitative strategies and perform backtesting.
           </p>
+
+          <!-- Step 1 -->
+          <div id="welcome" class="step active">
+            <h3>Quant Trading System</h3>
+            <p>
+              Welcome! This is a fun quant trading system I built for experimentation.
+              You can explore different quantitative investment strategies, compare their performance, and simulate trading outcomes.
+            </p>
+            <div class="button-group">
+              <button id="start-button" onclick="startQuant()">Start</button>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div id="stock-selection" class="step">
+            <h2>Step 1: Select the stocks you’re interested in</h2>
+            <div class="stock-list"></div>
+            <div class="button-group">
+              <button class="back-button" onclick="goToWelcome()">Back</button>
+              <button onclick="goToStrategy()">Next</button>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div id="strategy-selection" class="step">
+            <h2>Step 2: Choose your quant strategy</h2>
+            <div class="selected-stocks">
+              <h3>Selected Stocks</h3>
+              <div id="selected-stocks-list"></div>
+            </div>
+            <div class="strategy-cards">
+              <div class="strategy-card" data-strategy="value">
+                <h3>Value Strategy</h3>
+                <p>Selects undervalued stocks based on PER and PBR metrics.</p>
+              </div>
+              <div class="strategy-card" data-strategy="quality">
+                <h3>Quality Strategy</h3>
+                <p>Focuses on high-quality firms with strong ROE and operating margins.</p>
+              </div>
+              <div class="strategy-card" data-strategy="momentum">
+                <h3>Momentum Strategy</h3>
+                <p>Pursues short-term returns based on price trends.</p>
+              </div>
+              <div class="strategy-card" data-strategy="hybrid">
+                <h3>Hybrid Strategy</h3>
+                <p>Combines the three approaches for a balanced portfolio.</p>
+              </div>
+            </div>
+            <div class="button-group">
+              <button class="back-button" onclick="goToStocks()">Back</button>
+              <button id="to-parameter-button">Next</button>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div id="parameter-setting" class="step">
+            <h2>Step 3: Adjust strategy parameters</h2>
+            <div class="parameter-controls">
+              <div class="parameter-group">
+                <h3>Weight Settings</h3>
+                <div class="slider-group">
+                  <label>ROE Weight</label>
+                  <input type="range" id="roe-weight" min="0" max="100" value="50">
+                </div>
+                <div class="slider-group">
+                  <label>Operating Margin Weight</label>
+                  <input type="range" id="margin-weight" min="0" max="100" value="50">
+                </div>
+              </div>
+              <div class="parameter-group">
+                <h3>Investment Horizon</h3>
+                <select id="investment-period">
+                  <option value="1">1 Month</option>
+                  <option value="3">3 Months</option>
+                  <option value="6">6 Months</option>
+                  <option value="12" selected>1 Year</option>
+                  <option value="24">2 Years</option>
+                </select>
+              </div>
+              <div class="parameter-group">
+                <h3>Rebalancing Frequency</h3>
+                <select id="rebalancing-period">
+                  <option value="1">Daily</option>
+                  <option value="7">Weekly</option>
+                  <option value="30" selected>Monthly</option>
+                  <option value="90">Quarterly</option>
+                </select>
+              </div>
+            </div>
+            <div class="button-group">
+              <button class="back-button" onclick="goToStrategy()">Back</button>
+              <button onclick="runStrategy()">Run Strategy</button>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div id="results" class="step">
+            <h2>Quant Strategy Results</h2>
+            <div class="results-container">
+              <div class="performance-metrics">
+                <div class="metric">
+                  <h3>Expected Return</h3>
+                  <p id="expected-return">-</p>
+                </div>
+                <div class="metric">
+                  <h3>Expected Volatility</h3>
+                  <p id="volatility">-</p>
+                </div>
+                <div class="metric">
+                  <h3>Sharpe Ratio</h3>
+                  <p id="sharpe-ratio">-</p>
+                </div>
+              </div>
+              <div class="chart-container">
+                <canvas id="performance-chart"></canvas>
+              </div>
+            </div>
+            <div class="button-group">
+              <button class="back-button" onclick="goToParameter()">Back</button>
+              <button onclick="restart()">Restart</button>
+            </div>
+          </div>
         </div>
 
-        <div class="quiz-card">
-          <h3>Quiz 2. Digit Sum Puzzle</h3>
-          <p>
-            Among all positive integers less than 1,000,000, how many have digits summing to 19?
+        <!-- Music Picks Panel -->
+        <div id="music-panel" class="fun-panel" role="tabpanel" hidden>
+          <p class="section-description">
+            This month’s recommended tracks — a small snapshot of what I’ve been listening to and why I like them.
           </p>
-          <div class="quiz-row">
-            <input id="q2-input" type="number" placeholder="Enter your answer" />
+
+          <!-- Track 1 -->
+          <div class="music-card">
+            <h3 class="music-title">Song Title 1</h3>
+            <p class="music-artist">Artist Name 1</p>
+            <p class="music-reason">
+              I like this track because the rhythm is calm but focused, which makes it perfect for coding or reading papers.
+            </p>
           </div>
-          <div id="q2-feedback" class="quiz-feedback"></div>
+
+          <!-- Track 2 -->
+          <div class="music-card">
+            <h3 class="music-title">Song Title 2</h3>
+            <p class="music-artist">Artist Name 2</p>
+            <p class="music-reason">
+              The melody feels a bit dreamy but steady, so I often listen to it when I walk home after a long day.
+            </p>
+          </div>
+
+          <!-- Track 3 -->
+          <div class="music-card">
+            <h3 class="music-title">Song Title 3</h3>
+            <p class="music-artist">Artist Name 3</p>
+            <p class="music-reason">
+              This one is more upbeat and energetic, and I like playing it when I need a small boost of motivation.
+            </p>
+          </div>
+
+          <!-- You can add more tracks by copying the block above -->
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
+    <style>
+      .fun-switch { display:flex; gap:.5rem; margin-bottom:1rem; }
+      .fun-tab { padding:.5rem .9rem; border:1px solid #ddd; background:#fafafa; border-radius:8px; cursor:pointer; font-size:0.95rem; }
+      .fun-tab.active { background:#fff; box-shadow:0 1px 4px rgba(0,0,0,.08); }
+      .fun-panel[hidden] { display:none; }
+      .fun-panel.active { display:block; }
+
+      .music-card {
+        border:1px solid #eee;
+        padding:1rem 1.2rem;
+        border-radius:10px;
+        margin:0.75rem 0;
+        background:#fafafa;
+      }
+      .music-title { margin:0 0 0.3rem; font-size:1.05rem; }
+      .music-artist { margin:0 0 0.4rem; font-weight:500; color:#666; }
+      .music-reason { margin:0; font-size:0.95rem; line-height:1.5; }
+    </style>
+
+    <script>
+      // Panel switcher
+      function showPanel(which) {
+        const quantBtn = document.querySelector('.fun-tab[aria-controls="quant-panel"]');
+        const musicBtn = document.querySelector('.fun-tab[aria-controls="music-panel"]');
+        const quantPanel = document.getElementById('quant-panel');
+        const musicPanel = document.getElementById('music-panel');
+
+        const setActive = (btn, panel, active) => {
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-selected', active ? 'true' : 'false');
+          panel.toggleAttribute('hidden', !active);
+          panel.classList.toggle('active', active);
+        };
+
+        if (which === 'quant') {
+          setActive(quantBtn, quantPanel, true);
+          setActive(musicBtn, musicPanel, false);
+        } else {
+          setActive(quantBtn, quantPanel, false);
+          setActive(musicBtn, musicPanel, true);
+        }
+      }
+
+      // 안전용 no-op (이미 main.js에 함수 있으면 이건 무시됨)
+      window.startQuant ??= function(){};
+      window.goToWelcome ??= function(){};
+      window.goToStrategy ??= function(){};
+      window.goToStocks ??= function(){};
+      window.goToParameter ??= function(){};
+      window.runStrategy ??= function(){};
+      window.restart ??= function(){};
+    </script>
+
+    
 
     <!-- Contact Section -->
     <section id="contact" class="section">
