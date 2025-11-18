@@ -131,10 +131,13 @@ function initQuantSystem() {
 }
 
 function showStep(stepId) {
-  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-  const target = document.getElementById(stepId);
-  if (target) target.classList.add('active');
+  const steps = document.querySelectorAll('#quant-panel .step');
+  steps.forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(stepId);
+  if (el) el.classList.add('active');
 }
+
+
 
 function startQuant() { showStep('stock-selection'); }
 function goToWelcome() { showStep('welcome'); }
