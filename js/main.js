@@ -10,8 +10,6 @@ let currentStrategy = null;
 // 섹션 표시 (탭 라우팅)
 // ---------------------
 function showSection(sectionId) {
-  console.log('[showSection]', sectionId);
-
   // 모든 섹션 숨김
   document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
 
@@ -19,11 +17,6 @@ function showSection(sectionId) {
   const target = document.getElementById(sectionId);
   if (target) {
     target.classList.add('active');
-
-    // For Jun 진입 시 초기화
-    if (sectionId === 'for-jun') {
-      initQuantSystem();
-    }
   }
 
   // 네비 active
@@ -47,8 +40,6 @@ window.addEventListener('hashchange', () => {
 // 초기화
 // ---------------------
 window.addEventListener('DOMContentLoaded', () => {
-  console.log('[DOMContentLoaded] init');
-
   // 종목 데이터 로드
   loadTop10Stocks();
 
@@ -122,14 +113,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// ---------------------
-// For Jun: 단계 로직
-// ---------------------
-function initQuantSystem() {
-  console.log('[quant] init');
-  showStep('welcome');
-}
-
 function showStep(stepId) {
   const steps = document.querySelectorAll('#quant-panel .step');
   steps.forEach(s => s.classList.remove('active'));
@@ -143,7 +126,6 @@ function startQuant() { showStep('stock-selection'); }
 function goToWelcome() { showStep('welcome'); }
 function goToStocks() { showStep('stock-selection'); }
 function goToStrategy() {
-  console.log('[quant] to strategy');
   updateSelectedStocksPreview();
   showStep('strategy-selection');
 }
@@ -220,5 +202,3 @@ function updateSelectedStocksPreview() {
     return `<div>${name} (${sym}) — ${price}원</div>`;
   }).join('');
 }
-
-console.log('[main.js] loaded');
